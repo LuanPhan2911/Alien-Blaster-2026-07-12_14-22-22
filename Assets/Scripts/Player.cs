@@ -9,30 +9,29 @@ public class Player : MonoBehaviour
 
     private float _jumpEndTime;
 
-    [SerializeField] private float jumpVelocity = 5f;
-    [SerializeField] private float jumpDuration = 0.5f;
+    [SerializeField] private float _jumpVelocity = 5f;
+    [SerializeField] private float _jumpDuration = 0.5f;
+    [SerializeField] private float _horizontalVelocity = 3f;
+
+
+    private PlayerAnimation _playerAnimation;
+
+
 
     public bool IsGrounded;
-
-
+    private float _horizontal;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        _playerAnimation = GetComponent<PlayerAnimation>();
+
+
     }
 
-    private void OnDrawGizmos()
-    {
-        SpriteRenderer spriteRenderer = spriteRenderer = GetComponent<SpriteRenderer>();
-        Gizmos.color = Color.red;
 
-        float y = spriteRenderer.bounds.extents.y;
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - y);
-
-        Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
-    }
 
     // Update is called once per frame
     void Update()
@@ -50,19 +49,53 @@ public class Player : MonoBehaviour
             IsGrounded = false;
         }
 
-        float x = Input.GetAxis("Horizontal");
+        _horizontal = Input.GetAxis("Horizontal");
 
         float verticalVelocity = rb.linearVelocity.y;
 
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded)
         {
-            _jumpEndTime = Time.time + jumpDuration;
+            _jumpEndTime = Time.time + _jumpDuration;
         }
         if (Input.GetKey(KeyCode.Space) && Time.time < _jumpEndTime)
         {
-            verticalVelocity = jumpVelocity;
+            verticalVelocity = _jumpVelocity;
         }
 
-        rb.linearVelocity = new Vector2(x, verticalVelocity);
+
+        rb.linearVelocity = new Vector2(_horizontal * _horizontalVelocity, verticalVelocity);
+
+        UpdateSprite();
+    }
+    private void UpdateSprite()
+    {
+        if (IsGrounded)
+        {
+            if (_horizontal != 0)
+            {
+                _playerAnimation.SetWalking(true);
+            }
+            else
+            {
+                _playerAnimation.SetIdle();
+            }
+            _playerAnimation.SetJumPing(false);
+        }
+        else
+        {
+            _playerAnimation.SetJumPing(true);
+        }
+
+
+        if (_horizontal > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (_horizontal < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+
+
     }
 }
