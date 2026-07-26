@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
 
+    private AudioSource _audioSource;
+
 
     private float _horizontal;
     private float _jumpEndTime;
@@ -28,6 +30,8 @@ public class Player : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
         _playerAnimation = GetComponent<PlayerAnimation>();
+
+        _audioSource = GetComponent<AudioSource>();
 
 
     }
@@ -56,6 +60,10 @@ public class Player : MonoBehaviour
         {
             _jumpEndTime = Time.time + _jumpDuration;
             _jumpRemain--;
+
+
+            _audioSource.pitch = _jumpRemain > 0 ? 1f : 1.2f;
+            _audioSource.Play();
         }
         if (Input.GetKey(KeyCode.Space) && Time.time < _jumpEndTime)
         {
