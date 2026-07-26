@@ -4,31 +4,41 @@ public class Player : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    private Rigidbody2D rb;
-    SpriteRenderer spriteRenderer;
-
-    private float _jumpEndTime;
+    public bool IsGrounded;
 
     [SerializeField] private float _jumpVelocity = 5f;
     [SerializeField] private float _jumpDuration = 0.5f;
     [SerializeField] private float _horizontalVelocity = 3f;
+    [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private float _feetSize = 0.6f;
 
 
     private PlayerAnimation _playerAnimation;
+    private Rigidbody2D _rb;
+    private SpriteRenderer _spriteRenderer;
 
 
-
-    public bool IsGrounded;
     private float _horizontal;
+    private float _jumpEndTime;
+    private int _jumpRemain;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
 
         _playerAnimation = GetComponent<PlayerAnimation>();
 
 
+    }
+
+    private void OnDrawGizmos()
+    {
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.bounds.extents.y);
+        Gizmos.color = Color.red;
+        //Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
+        Gizmos.DrawCube(origin + Vector2.down * 0.05f, new Vector3(_feetSize, 0.1f, 0));
     }
 
 
@@ -36,26 +46,16 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.bounds.extents.y);
-
-        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 0.1f);
-        if (hit.collider != null)
-        {
-            IsGrounded = true;
-        }
-        else
-        {
-            IsGrounded = false;
-        }
+        CheckGrouding();
 
         _horizontal = Input.GetAxis("Horizontal");
 
-        float verticalVelocity = rb.linearVelocity.y;
+        float verticalVelocity = _rb.linearVelocity.y;
 
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && _jumpRemain > 0)
         {
             _jumpEndTime = Time.time + _jumpDuration;
+            _jumpRemain--;
         }
         if (Input.GetKey(KeyCode.Space) && Time.time < _jumpEndTime)
         {
@@ -63,37 +63,45 @@ public class Player : MonoBehaviour
         }
 
 
-        rb.linearVelocity = new Vector2(_horizontal * _horizontalVelocity, verticalVelocity);
+        _rb.linearVelocity = new Vector2(_horizontal * _horizontalVelocity, verticalVelocity);
 
         UpdateSprite();
     }
+
+    private void CheckGrouding()
+    {
+        IsGrounded = false;
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.bounds.extents.y);
+
+        RaycastHit2D hit = Physics2D.BoxCast(origin, new Vector2(_feetSize, 0.1f), 0, Vector2.down, 0.1f, _layerMask);
+
+
+        if (hit.collider != null)
+        {
+            IsGrounded = true;
+        }
+
+        if (IsGrounded && _rb.linearVelocity.y == 0f)
+        {
+            _jumpRemain = 2;
+        }
+
+    }
+
     private void UpdateSprite()
     {
-        if (IsGrounded)
-        {
-            if (_horizontal != 0)
-            {
-                _playerAnimation.SetWalking(true);
-            }
-            else
-            {
-                _playerAnimation.SetIdle();
-            }
-            _playerAnimation.SetJumPing(false);
-        }
-        else
-        {
-            _playerAnimation.SetJumPing(true);
-        }
+
+        _playerAnimation.SetHorizontal(_horizontal);
+        _playerAnimation.SetJumPing(!IsGrounded);
 
 
         if (_horizontal > 0)
         {
-            spriteRenderer.flipX = false;
+            _spriteRenderer.flipX = false;
         }
         else if (_horizontal < 0)
         {
-            spriteRenderer.flipX = true;
+            _spriteRenderer.flipX = true;
         }
 
 

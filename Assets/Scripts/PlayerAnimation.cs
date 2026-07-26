@@ -7,7 +7,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private Animator animator;
 
-    const string IS_WALKING = "IsWalking";
+    const string HORIZONTAL = "Horizontal";
     const string IS_JUMPING = "IsJumping";
 
 
@@ -16,18 +16,14 @@ public class PlayerAnimation : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    public void SetWalking(bool isWalking)
-    {
-        animator.SetBool(IS_WALKING, isWalking);
-    }
+
     public void SetJumPing(bool isJumping)
     {
         animator.SetBool(IS_JUMPING, isJumping);
     }
 
-    public void SetIdle()
+    public void SetHorizontal(float horizontal)
     {
-        animator.SetBool(IS_WALKING, false);
-        animator.SetBool(IS_JUMPING, false);
+        animator.SetFloat(HORIZONTAL, Mathf.Abs(horizontal));
     }
 }

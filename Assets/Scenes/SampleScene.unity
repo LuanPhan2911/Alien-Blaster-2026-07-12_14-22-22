@@ -353,6 +353,8 @@ GameObject:
   - component: {fileID: 1678935665}
   - component: {fileID: 1678935664}
   - component: {fileID: 1678935663}
+  - component: {fileID: 1678935666}
+  - component: {fileID: 1678935667}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -472,7 +474,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8359375, y: 1.1796875}
+    oldSize: {x: 0.859375, y: 1.1953125}
     newSize: {x: 0.859375, y: 1.1953125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -594,6 +596,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1678935666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678935659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 489cfd8e36569f247ab0b83542dcd52e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  _jumpVelocity: 5
+  _jumpDuration: 0.5
+  _horizontalVelocity: 3
+  IsGrounded: 0
+--- !u!114 &1678935667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678935659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd389ea37417544e9817298543153c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
 --- !u!1 &1909587201
 GameObject:
   m_ObjectHideFlags: 0
