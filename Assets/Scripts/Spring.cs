@@ -8,11 +8,13 @@ public class Spring : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
     private Sprite _originalSprite;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _originalSprite = _spriteRenderer.sprite;
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -20,6 +22,7 @@ public class Spring : MonoBehaviour
         if (collision.collider.TryGetComponent(out Player player))
         {
             _spriteRenderer.sprite = _sprungSprite;
+            _audioSource.Play();
         }
     }
 
