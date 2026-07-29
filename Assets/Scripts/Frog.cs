@@ -8,16 +8,20 @@ public class Frog : MonoBehaviour
     [SerializeField] private Vector2 _jumpForce;
     [SerializeField] private Sprite _jumpSprite;
     [SerializeField] private LayerMask _groundLayerMask;
-    [SerializeField] private LayerMask _bounderyMask;
     [SerializeField] private float _jumpInterval = 3f;
+
+    [SerializeField] private float _actionRadius = 5f;
+    [SerializeField] private float _offset = 0.5f;
+
+
+    [SerializeField] private float detectionRadius = 4f;
 
     private Sprite _defaultSprite;
     private Rigidbody2D _rb;
 
     private SpriteRenderer _spriteRenderer;
 
-
-
+    private Vector2 _startPosition;
 
     private void Awake()
     {
@@ -25,6 +29,7 @@ public class Frog : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
         _defaultSprite = _spriteRenderer.sprite;
+        _startPosition = new Vector2(transform.position.x, transform.position.y);
     }
 
     private void Start()
@@ -36,6 +41,10 @@ public class Frog : MonoBehaviour
     {
         _rb.AddForce(_jumpForce);
         _spriteRenderer.sprite = _jumpSprite;
+
+
+
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -45,15 +54,46 @@ public class Frog : MonoBehaviour
         {
 
             _spriteRenderer.sprite = _defaultSprite;
+            // reverse the jump force if the frog is outside the action radius
+
+            float distanceFromStart = Vector2.Distance(_startPosition, transform.position);
+
+            if (distanceFromStart > _actionRadius - _offset)
+            {
+                _jumpForce.x = -_jumpForce.x;
+                _spriteRenderer.flipX = !_spriteRenderer.flipX;
+            }
+            else
+            {
+                DetectPlayer();
+            }
+
+
+
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void DetectPlayer()
     {
-        // reverse the direction of the frog when it hits a boundary
-        if (_bounderyMask.Contains(collision.gameObject.layer))
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, detectionRadius,
+            Vector2.zero, 0f, LayerMask.GetMask("Player"));
+
+
+        if (hit.collider != null && hit.collider.TryGetComponent(out Player player))
         {
-            _jumpForce.x = -_jumpForce.x;
-            _spriteRenderer.flipX = !_spriteRenderer.flipX;
+            Vector2 direction = player.transform.position - transform.position;
+
+            if (direction.x < 0)
+            {
+                _jumpForce.x = -Mathf.Abs(_jumpForce.x);
+                _spriteRenderer.flipX = false;
+            }
+            else
+            {
+                _jumpForce.x = Mathf.Abs(_jumpForce.x);
+                _spriteRenderer.flipX = true;
+            }
         }
     }
+
 }
