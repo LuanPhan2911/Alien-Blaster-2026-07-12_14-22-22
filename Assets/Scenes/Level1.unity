@@ -1116,7 +1116,7 @@ MonoBehaviour:
   _horizontalVelocity: 3
   _layerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 391
   _feetSize: 1
 --- !u!114 &1678935667
 MonoBehaviour:
@@ -1323,12 +1323,20 @@ PrefabInstance:
       value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 949497056096551485, guid: 95699e6140ccdd7438ff53d116c273f9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 949497056096551485, guid: 95699e6140ccdd7438ff53d116c273f9, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5476775766909561024, guid: 95699e6140ccdd7438ff53d116c273f9, type: 3}
       propertyPath: m_Size.x
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5476775766909561024, guid: 95699e6140ccdd7438ff53d116c273f9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5790721447435261749, guid: 95699e6140ccdd7438ff53d116c273f9, type: 3}
       propertyPath: m_Name
