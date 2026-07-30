@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     public bool IsGrounded;
+    public static string PlayerTag = "Player";
 
     [SerializeField] private float _jumpVelocity = 5f;
     [SerializeField] private float _jumpDuration = 0.5f;

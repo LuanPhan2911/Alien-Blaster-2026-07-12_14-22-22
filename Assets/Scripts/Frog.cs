@@ -15,6 +15,7 @@ public class Frog : MonoBehaviour
 
 
     [SerializeField] private float detectionRadius = 4f;
+    [SerializeField] private AudioSource _audioSource;
 
     private Sprite _defaultSprite;
     private Rigidbody2D _rb;
@@ -30,6 +31,7 @@ public class Frog : MonoBehaviour
 
         _defaultSprite = _spriteRenderer.sprite;
         _startPosition = new Vector2(transform.position.x, transform.position.y);
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -54,6 +56,7 @@ public class Frog : MonoBehaviour
         {
 
             _spriteRenderer.sprite = _defaultSprite;
+            _audioSource.Play();
             // reverse the jump force if the frog is outside the action radius
 
             float distanceFromStart = Vector2.Distance(_startPosition, transform.position);
