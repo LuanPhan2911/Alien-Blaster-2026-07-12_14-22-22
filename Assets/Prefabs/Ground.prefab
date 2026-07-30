@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 1076148309332708220}
   - component: {fileID: 8419508746829098368}
   - component: {fileID: 3597149227547933507}
+  - component: {fileID: 3681961429847578198}
   m_Layer: 7
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Grass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,6 +140,18 @@ BoxCollider2D:
   m_AutoTiling: 1
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3681961429847578198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423008008707524890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50d2a2b7afe6add4db36686514d928a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ground
 --- !u!1 &5523790303894434043
 GameObject:
   m_ObjectHideFlags: 0

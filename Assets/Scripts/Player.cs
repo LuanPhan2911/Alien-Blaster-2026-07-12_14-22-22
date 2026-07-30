@@ -5,13 +5,17 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     public bool IsGrounded;
-    public static string PlayerTag = "Player";
+    public const string PLAYER_TAG = "Player";
+    public bool IsOnSnow;
 
     [SerializeField] private float _jumpVelocity = 5f;
     [SerializeField] private float _jumpDuration = 0.5f;
-    [SerializeField] private float _horizontalVelocity = 3f;
+    [SerializeField] private float _horizontalMaxSpeed = 5f;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private float _feetSize = 0.6f;
+
+    [SerializeField] private float _groundAcceleration = 10f;
+    [SerializeField] private float _snowAcceleration = 1f;
 
 
     private PlayerAnimation _playerAnimation;
@@ -24,6 +28,7 @@ public class Player : MonoBehaviour
     private float _horizontal;
     private float _jumpEndTime;
     private int _jumpRemain;
+
 
     private void Awake()
     {
@@ -53,7 +58,7 @@ public class Player : MonoBehaviour
     {
         CheckGrouding();
 
-        _horizontal = Input.GetAxis("Horizontal");
+        float horizontalInput = Input.GetAxis("Horizontal");
 
         float verticalVelocity = _rb.linearVelocity.y;
 
@@ -71,8 +76,11 @@ public class Player : MonoBehaviour
             verticalVelocity = _jumpVelocity;
         }
 
+        float desiredHorizontalVelocity = horizontalInput * _horizontalMaxSpeed;
 
-        _rb.linearVelocity = new Vector2(_horizontal * _horizontalVelocity, verticalVelocity);
+        float acceleration = IsOnSnow ? _snowAcceleration : _groundAcceleration;
+        _horizontal = Mathf.Lerp(_horizontal, desiredHorizontalVelocity, Time.deltaTime * acceleration);
+        _rb.linearVelocity = new Vector2(_horizontal, verticalVelocity);
 
         UpdateSprite();
     }
@@ -80,6 +88,7 @@ public class Player : MonoBehaviour
     private void CheckGrouding()
     {
         IsGrounded = false;
+        IsOnSnow = false;
         Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.bounds.extents.y);
 
         RaycastHit2D hit = Physics2D.BoxCast(origin, new Vector2(_feetSize, 0.1f), 0, Vector2.down, 0.1f, _layerMask);
@@ -88,6 +97,7 @@ public class Player : MonoBehaviour
         if (hit.collider != null)
         {
             IsGrounded = true;
+            IsOnSnow = hit.collider.CompareTag(Ground.SNOW_TAG);
         }
 
         if (IsGrounded && _rb.linearVelocity.y == 0f)

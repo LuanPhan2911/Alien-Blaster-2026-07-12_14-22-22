@@ -32,6 +32,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SnowPlatform
       objectReference: {fileID: 0}
+    - target: {fileID: 5790721447435261749, guid: 95699e6140ccdd7438ff53d116c273f9, type: 3}
+      propertyPath: m_TagString
+      value: Snow
+      objectReference: {fileID: 0}
     - target: {fileID: 6026024376067854946, guid: 95699e6140ccdd7438ff53d116c273f9, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -79,6 +83,14 @@ PrefabInstance:
     - target: {fileID: 7125632893255685302, guid: 95699e6140ccdd7438ff53d116c273f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8104363252033685271, guid: 95699e6140ccdd7438ff53d116c273f9, type: 3}
+      propertyPath: m_TagString
+      value: Snow
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562339230188952336, guid: 95699e6140ccdd7438ff53d116c273f9, type: 3}
+      propertyPath: m_TagString
+      value: Snow
       objectReference: {fileID: 0}
     - target: {fileID: 8695857961088820704, guid: 95699e6140ccdd7438ff53d116c273f9, type: 3}
       propertyPath: m_Sprite
