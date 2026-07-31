@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
 
     private AudioSource _audioSource;
+    private PlayerInput _playerInput;
 
 
     private float _horizontal;
@@ -38,6 +40,8 @@ public class Player : MonoBehaviour
         _playerAnimation = GetComponent<PlayerAnimation>();
 
         _audioSource = GetComponent<AudioSource>();
+
+        _playerInput = GetComponent<PlayerInput>();
 
 
     }
@@ -58,11 +62,11 @@ public class Player : MonoBehaviour
     {
         CheckGrouding();
 
-        float horizontalInput = Input.GetAxis("Horizontal");
+        float horizontalInput = _playerInput.actions["Move"].ReadValue<Vector2>().x;
 
         float verticalVelocity = _rb.linearVelocity.y;
 
-        if (Input.GetKeyDown(KeyCode.Space) && _jumpRemain > 0)
+        if (_playerInput.actions["Jump"].WasPressedThisFrame() && _jumpRemain > 0)
         {
             _jumpEndTime = Time.time + _jumpDuration;
             _jumpRemain--;
@@ -71,7 +75,7 @@ public class Player : MonoBehaviour
             _audioSource.pitch = _jumpRemain > 0 ? 1f : 1.2f;
             _audioSource.Play();
         }
-        if (Input.GetKey(KeyCode.Space) && Time.time < _jumpEndTime)
+        if (_playerInput.actions["Jump"].IsPressed() && Time.time < _jumpEndTime)
         {
             verticalVelocity = _jumpVelocity;
         }
