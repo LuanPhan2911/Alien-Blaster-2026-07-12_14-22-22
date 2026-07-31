@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +31,10 @@ public class Player : MonoBehaviour
     private float _horizontal;
     private float _jumpEndTime;
     private int _jumpRemain;
+
+    public int Coin { get; private set; }
+
+    public static event EventHandler<int> OnCoinChanged;
 
 
     private void Awake()
@@ -128,5 +133,15 @@ public class Player : MonoBehaviour
         }
 
 
+    }
+
+    public void AddCoin()
+    {
+        Coin++;
+        OnCoinChanged?.Invoke(this, Coin);
+    }
+    public void PlaySound(AudioClip clip)
+    {
+        _audioSource.PlayOneShot(clip);
     }
 }
