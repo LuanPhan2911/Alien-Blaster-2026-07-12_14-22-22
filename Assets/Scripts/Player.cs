@@ -32,7 +32,14 @@ public class Player : MonoBehaviour
     private float _jumpEndTime;
     private int _jumpRemain;
 
-    public int Coin { get; private set; }
+    public class PlayerData
+    {
+        public int Coin;
+        public int Health;
+    }
+    private PlayerData _playerData;
+
+    public int Coin { get => _playerData.Coin; private set => _playerData.Coin = value; }
 
     public static event EventHandler<int> OnCoinChanged;
 
@@ -50,6 +57,13 @@ public class Player : MonoBehaviour
 
 
     }
+    private void Start()
+    {
+        _playerData = GameManager.Instance.GetPlayerData();
+
+        // Update the UI with the current coin count at the start of the game
+        OnCoinChanged?.Invoke(this, Coin);
+    }
 
     private void OnDrawGizmos()
     {
@@ -59,6 +73,7 @@ public class Player : MonoBehaviour
         //Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
         Gizmos.DrawCube(origin + Vector2.down * 0.05f, new Vector3(_feetSize, 0.1f, 0));
     }
+
 
 
 
@@ -144,4 +159,5 @@ public class Player : MonoBehaviour
     {
         _audioSource.PlayOneShot(clip);
     }
+
 }
