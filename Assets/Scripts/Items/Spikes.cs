@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Spikes : MonoBehaviour
 {
@@ -11,7 +10,11 @@ public class Spikes : MonoBehaviour
         if (collision.collider.TryGetComponent(out Player player))
         {
 
-            SceneManager.LoadScene(0);
+            player.TakeDamage();
+
+            Vector2 direction = -collision.GetContact(0).normal;
+
+            player.TakeKnockback(direction);
         }
     }
 }

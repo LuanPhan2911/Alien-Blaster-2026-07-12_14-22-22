@@ -6,16 +6,26 @@ public class Frog : MonoBehaviour
 
 
     [SerializeField] private Vector2 _jumpForce;
+    [SerializeField] private Vector2 _jumpForceHasTarget;
+
     [SerializeField] private Sprite _jumpSprite;
     [SerializeField] private LayerMask _groundLayerMask;
+
     [SerializeField] private float _jumpInterval = 3f;
+    [SerializeField] private float _jumIntervalHasTarget = 1.5f;
 
     [SerializeField] private float _actionRadius = 5f;
     [SerializeField] private float _offset = 0.5f;
 
 
     [SerializeField] private float detectionRadius = 4f;
-    [SerializeField] private AudioSource _audioSource;
+
+    [SerializeField] private float _facingDirection = -1; // 1 for right, -1 for left
+    private AudioSource _audioSource;
+
+    public bool HasTarget { get; private set; }
+
+
 
     private Sprite _defaultSprite;
     private Rigidbody2D _rb;
@@ -36,12 +46,16 @@ public class Frog : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating(nameof(Jump), _jumpInterval, _jumpInterval);
+        float interval = HasTarget ? _jumIntervalHasTarget : _jumpInterval;
+        InvokeRepeating(nameof(Jump), interval, interval);
     }
 
     private void Jump()
     {
-        _rb.AddForce(_jumpForce);
+        Vector2 jumpForce = HasTarget ? _jumpForceHasTarget : _jumpForce;
+
+        jumpForce.x *= _facingDirection; // Apply facing direction to the x component of the jump force
+        _rb.AddForce(jumpForce, ForceMode2D.Impulse);
         _spriteRenderer.sprite = _jumpSprite;
 
 
@@ -49,30 +63,34 @@ public class Frog : MonoBehaviour
 
     }
 
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // change the sprite back to the default sprite when the frog lands on the ground
         if (_groundLayerMask.Contains(collision.gameObject.layer))
         {
 
+            HasTarget = false;
             _spriteRenderer.sprite = _defaultSprite;
             _audioSource.Play();
             // reverse the jump force if the frog is outside the action radius
+
+
 
             float distanceFromStart = Vector2.Distance(_startPosition, transform.position);
 
             if (distanceFromStart > _actionRadius - _offset)
             {
-                _jumpForce.x = -_jumpForce.x;
-                _spriteRenderer.flipX = !_spriteRenderer.flipX;
+                Vector2 direction = _startPosition - (Vector2)transform.position;
+                _facingDirection = direction.x < 0 ? -1 : 1;
             }
             else
             {
                 DetectPlayer();
+
+                // Flip the sprite based on the facing direction
             }
-
-
-
+            _spriteRenderer.flipX = _facingDirection > 0;
         }
     }
 
@@ -86,17 +104,12 @@ public class Frog : MonoBehaviour
         {
             Vector2 direction = player.transform.position - transform.position;
 
-            if (direction.x < 0)
-            {
-                _jumpForce.x = -Mathf.Abs(_jumpForce.x);
-                _spriteRenderer.flipX = false;
-            }
-            else
-            {
-                _jumpForce.x = Mathf.Abs(_jumpForce.x);
-                _spriteRenderer.flipX = true;
-            }
+            HasTarget = true;
+
+
+            _facingDirection = direction.x < 0 ? -1 : 1;
         }
+
     }
 
 }

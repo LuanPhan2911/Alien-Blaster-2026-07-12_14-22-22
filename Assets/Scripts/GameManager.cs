@@ -5,7 +5,9 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
-    private Player.PlayerData _playerData;
+    private PlayerData _playerData;
+
+
 
 
 
@@ -17,15 +19,19 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
 
-        _playerData = new Player.PlayerData();
-
+        _playerData = new PlayerData();
+        ResetPlayerData();
 
     }
+    public void ResetPlayerData()
+    {
+        _playerData.Coin = 0;
+        _playerData.Health = PlayerData.MAX_HEALTH;
+    }
 
-
-    public Player.PlayerData GetPlayerData()
+    public PlayerData GetPlayerData()
     {
         return _playerData;
     }

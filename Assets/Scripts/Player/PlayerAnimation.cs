@@ -17,7 +17,7 @@ public class PlayerAnimation : MonoBehaviour
     }
 
 
-    public void SetJumPing(bool isJumping)
+    public void SetJumping(bool isJumping)
     {
         animator.SetBool(IS_JUMPING, isJumping);
     }
