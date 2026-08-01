@@ -709,8 +709,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c55ffef9fb9af459fafb44cc767a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
-  _flashDuration: 0.1
-  _flashMaterial: {fileID: 2100000, guid: 3f016ab7133293f48b4eb17de43cf5ad, type: 2}
+  _flashDuration: 0.2
+  _flashColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1 &1688137062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8692538350587447228, guid: 5f28d815edf96b84cbd4d4263e8af1bc, type: 3}
+  m_PrefabInstance: {fileID: 1719701818436955181}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1688137067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688137062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa41e55c76c3dc947976a42ce9ace258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RotationY
+  rotationSpeed: 100
 --- !u!1 &1731235293
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,6 +1128,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 203626855447978277, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 6f595ec509c3cd243b6d39bf3a0139a8, type: 3}
     - target: {fileID: 577240107966679132, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1391,7 +1413,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8692538350587447228, guid: 5f28d815edf96b84cbd4d4263e8af1bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1688137067}
   m_SourcePrefab: {fileID: 100100000, guid: 5f28d815edf96b84cbd4d4263e8af1bc, type: 3}
 --- !u!1001 &2191561789912436915
 PrefabInstance:

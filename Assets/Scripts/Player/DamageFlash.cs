@@ -14,6 +14,9 @@ public class DamageFlash : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Coroutine _flashCoroutin;
 
+
+    private const string FLASH_COLOR_PROPERTY = "_FlashColor";
+    private const string FLASH_AMOUNT_PROPERTY = "_FlashAmount";
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -36,14 +39,16 @@ public class DamageFlash : MonoBehaviour
 
         float elapsedTime = 0f;
 
-        _flashMaterial.SetColor("_FlashColor", _flashColor);
+        // set the flash color to the material
+        _flashMaterial.SetColor(FLASH_COLOR_PROPERTY, _flashColor);
+
         while (elapsedTime < _flashDuration)
         {
             elapsedTime += Time.deltaTime;
             float flashAmount = Mathf.Lerp(1f, 0f, elapsedTime / _flashDuration);
 
             // set the flash amount to the material
-            _flashMaterial.SetFloat("_FlashAmount", flashAmount);
+            _flashMaterial.SetFloat(FLASH_AMOUNT_PROPERTY, flashAmount);
 
             yield return null;
         }

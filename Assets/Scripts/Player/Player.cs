@@ -8,6 +8,7 @@ public partial class Player : MonoBehaviour
 
     public bool IsGrounded;
     public const string PLAYER_TAG = "Player";
+    public const string PLAYER_MASK = "Player";
     public bool IsOnSnow;
 
     [SerializeField] private float _jumpVelocity = 5f;
@@ -46,6 +47,7 @@ public partial class Player : MonoBehaviour
     public int Health { get => _playerData.Health; private set => _playerData.Health = value; }
 
     public static event EventHandler<int> OnCoinChanged;
+    public static event EventHandler<int> OnHealthChanged;
 
 
     private void Awake()
@@ -70,6 +72,7 @@ public partial class Player : MonoBehaviour
 
         // Update the UI with the current coin count at the start of the game
         OnCoinChanged?.Invoke(this, Coin);
+        OnHealthChanged?.Invoke(this, Health);
     }
 
     private void OnDrawGizmos()
@@ -180,6 +183,8 @@ public partial class Player : MonoBehaviour
         Health--;
 
         _audioSource.PlayOneShot(_hurtSound);
+
+        OnHealthChanged?.Invoke(this, Health);
 
         _damageFlash.Flash();
         if (Health <= 0)

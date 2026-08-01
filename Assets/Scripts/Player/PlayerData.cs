@@ -8,7 +8,7 @@ public class PlayerData
 
 
 
-    public const int MAX_HEALTH = 100;
+    public const int MAX_HEALTH = 6;
 
 
 
