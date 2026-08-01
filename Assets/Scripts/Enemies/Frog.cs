@@ -33,6 +33,7 @@ public class Frog : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
 
     private Vector2 _startPosition;
+    private float _timeSinceLastJump = 0f;
 
     private void Awake()
     {
@@ -44,10 +45,16 @@ public class Frog : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
     }
 
-    private void Start()
+
+    private void Update()
     {
+        _timeSinceLastJump += Time.deltaTime;
         float interval = HasTarget ? _jumIntervalHasTarget : _jumpInterval;
-        InvokeRepeating(nameof(Jump), interval, interval);
+        if (_timeSinceLastJump >= interval)
+        {
+            Jump();
+            _timeSinceLastJump = 0f;
+        }
     }
 
     private void Jump()
@@ -79,17 +86,13 @@ public class Frog : MonoBehaviour
 
             float distanceFromStart = Vector2.Distance(_startPosition, transform.position);
 
+            DetectPlayer();
             if (distanceFromStart > _actionRadius - _offset)
             {
                 Vector2 direction = _startPosition - (Vector2)transform.position;
                 _facingDirection = direction.x < 0 ? -1 : 1;
             }
-            else
-            {
-                DetectPlayer();
 
-                // Flip the sprite based on the facing direction
-            }
             _spriteRenderer.flipX = _facingDirection > 0;
         }
     }

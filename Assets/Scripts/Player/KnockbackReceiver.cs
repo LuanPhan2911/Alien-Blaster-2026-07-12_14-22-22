@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class KnockbackReceiver : MonoBehaviour
@@ -15,21 +16,32 @@ public class KnockbackReceiver : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
     }
 
-    public void ReceiveKnockback(Vector2 direction, float force, float duration)
+    public void Knockback(Vector2 direction)
     {
         if (IsKnockbacked) return;
-        IsKnockbacked = true;
-        _rb.linearVelocity = Vector2.zero; // Reset current velocity
-        Debug.Log(direction.normalized * force);
-        _rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
-        Invoke(nameof(ResetKnockback), duration);
+        float force = _baseKnockbackForce;
+        float duration = _baseKnockbackDuration;
+        StartCoroutine(KnockbackCoroutine(direction, force, duration));
     }
-    public void ReceiveKnockback(Vector2 direction)
+    public void Knockback(Vector2 direction, float force, float duration)
     {
-        ReceiveKnockback(direction, _baseKnockbackForce, _baseKnockbackDuration);
-        Invoke(nameof(ResetKnockback), _baseKnockbackDuration);
+        if (IsKnockbacked) return;
+        StartCoroutine(KnockbackCoroutine(direction, force, duration));
     }
 
+    private IEnumerator KnockbackCoroutine(Vector2 direction, float force, float duration)
+    {
+
+        IsKnockbacked = true;
+        _rb.linearVelocity = Vector2.zero; // Reset current velocity
+
+        _rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(duration);
+
+        ResetKnockback();
+
+    }
 
 
     private void ResetKnockback()

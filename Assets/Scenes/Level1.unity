@@ -692,6 +692,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1076148309332708220, guid: 1ff0ae16fff868040b9fcfa5e9c1ff59, type: 3}
   m_PrefabInstance: {fileID: 2036284983}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1441133267 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 577240107966679132, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
+  m_PrefabInstance: {fileID: 1013841942155431829}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1441133279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441133267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c55ffef9fb9af459fafb44cc767a09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
+  _flashDuration: 0.1
+  _flashMaterial: {fileID: 2100000, guid: 3f016ab7133293f48b4eb17de43cf5ad, type: 2}
 --- !u!1 &1731235293
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,6 +1039,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spring
       objectReference: {fileID: 0}
+    - target: {fileID: 8366529090099463116, guid: 3bbb5d1d905d17d409a3a3c631ad19eb, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 5028d8b23801dcd4fb28e768e74b94dc, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1092,6 +1115,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5550621519107340329, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
+      propertyPath: _hurtSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0d1a58769e7e82f44a3d3a95ff901221, type: 3}
+    - target: {fileID: 5550621519107340329, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
       propertyPath: _jumpVelocity
       value: 5
       objectReference: {fileID: 0}
@@ -1139,10 +1166,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8339975547560672444, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 5028d8b23801dcd4fb28e768e74b94dc, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 577240107966679132, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1441133279}
   m_SourcePrefab: {fileID: 100100000, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
 --- !u!1001 &1174389219440608659
 PrefabInstance:
@@ -1424,20 +1458,28 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2165768822378889571, guid: 37962c98ba838424a8e103436f245a24, type: 3}
+      propertyPath: detectionRadius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2165768822378889571, guid: 37962c98ba838424a8e103436f245a24, type: 3}
       propertyPath: _jumIntervalHasTarget
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2165768822378889571, guid: 37962c98ba838424a8e103436f245a24, type: 3}
       propertyPath: _jumpForceHasTarget.x
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2165768822378889571, guid: 37962c98ba838424a8e103436f245a24, type: 3}
       propertyPath: _jumpForceHasTarget.y
-      value: 4
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 3149363392696182416, guid: 37962c98ba838424a8e103436f245a24, type: 3}
       propertyPath: m_Name
       value: Frog
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433611659608644017, guid: 37962c98ba838424a8e103436f245a24, type: 3}
+      propertyPath: _radius
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4991712921389980262, guid: 37962c98ba838424a8e103436f245a24, type: 3}
       propertyPath: _radius

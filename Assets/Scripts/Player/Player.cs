@@ -19,6 +19,7 @@ public partial class Player : MonoBehaviour
     [SerializeField] private float _groundAcceleration = 10f;
     [SerializeField] private float _snowAcceleration = 1f;
 
+    [SerializeField] private AudioClip _hurtSound;
 
 
 
@@ -27,6 +28,8 @@ public partial class Player : MonoBehaviour
     private KnockbackReceiver _knockbackReceiver;
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
+
+    private DamageFlash _damageFlash;
 
     private AudioSource _audioSource;
     private PlayerInput _playerInput;
@@ -57,6 +60,7 @@ public partial class Player : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
 
         _knockbackReceiver = GetComponent<KnockbackReceiver>();
+        _damageFlash = GetComponent<DamageFlash>();
 
 
     }
@@ -95,8 +99,6 @@ public partial class Player : MonoBehaviour
             _jumpEndTime = Time.time + _jumpDuration;
             _jumpRemain--;
 
-
-            _audioSource.pitch = _jumpRemain > 0 ? 1f : 1.2f;
             _audioSource.Play();
         }
         if (_playerInput.actions["Jump"].IsPressed() && Time.time < _jumpEndTime)
@@ -176,6 +178,10 @@ public partial class Player : MonoBehaviour
     public void TakeDamage()
     {
         Health--;
+
+        _audioSource.PlayOneShot(_hurtSound);
+
+        _damageFlash.Flash();
         if (Health <= 0)
         {
             // Handle player death (e.g., reload the scene, show game over screen, etc.)
@@ -186,9 +192,7 @@ public partial class Player : MonoBehaviour
     }
     public void TakeKnockback(Vector2 direction)
     {
-
-
-        _knockbackReceiver.ReceiveKnockback(direction);
+        _knockbackReceiver.Knockback(direction);
 
     }
 
