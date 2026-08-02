@@ -68,7 +68,7 @@ public partial class Player : MonoBehaviour
     }
     private void Start()
     {
-        _playerData = GameManager.Instance.GetPlayerData();
+        _playerData = GameManager.Instance.PlayerData;
 
         // Update the UI with the current coin count at the start of the game
         OnCoinChanged?.Invoke(this, Coin);
@@ -192,7 +192,7 @@ public partial class Player : MonoBehaviour
             // Handle player death (e.g., reload the scene, show game over screen, etc.)
 
             SceneLoader.LoadScene(SceneLoader.Scene.MainMenu);
-            GameManager.Instance.ResetPlayerData();
+
         }
     }
     public void TakeKnockback(Vector2 direction)

@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
 
     public static GameManager Instance { get; private set; }
 
-    private PlayerData _playerData;
+    public PlayerData PlayerData { get; private set; }
 
 
 
@@ -21,20 +22,53 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        _playerData = new PlayerData();
-        ResetPlayerData();
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
     }
-    public void ResetPlayerData()
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        _playerData.Coin = 0;
-        _playerData.Health = PlayerData.MAX_HEALTH;
+        if (arg0.name != SceneLoader.Scene.MainMenu.ToString())
+        {
+            SaveGame();
+        }
     }
 
-    public PlayerData GetPlayerData()
+    private void InitPlayerData()
     {
-        return _playerData;
+        PlayerData = new PlayerData();
+        PlayerData.Coin = 0;
+        PlayerData.Health = PlayerData.MAX_HEALTH;
     }
 
 
+
+    public void NewGame()
+    {
+        InitPlayerData();
+        SceneLoader.LoadScene(SceneLoader.Scene.Level1);
+    }
+
+    public void SaveGame()
+    {
+        string data = JsonUtility.ToJson(PlayerData);
+
+        PlayerPrefs.SetString("PlayerData", data);
+    }
+
+    public void LoadGame()
+    {
+        if (PlayerPrefs.HasKey("PlayerData"))
+        {
+            string data = PlayerPrefs.GetString("PlayerData");
+            PlayerData = JsonUtility.FromJson<PlayerData>(data);
+        }
+        else
+        {
+            InitPlayerData();
+        }
+
+        SceneLoader.LoadScene(SceneLoader.Scene.Level1);
+    }
 }
