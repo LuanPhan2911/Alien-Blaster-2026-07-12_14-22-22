@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +10,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public PlayerData PlayerData { get; private set; }
+
+    public List<string> GameNameList = new List<string>();
 
 
 
@@ -25,6 +30,14 @@ public class GameManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
+        if (PlayerPrefs.HasKey("GameNameList"))
+        {
+            string gameListData = PlayerPrefs.GetString("GameNameList");
+            GameNameList = gameListData.Split(',').ToList<string>();
+        }
+
+
+
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -40,6 +53,8 @@ public class GameManager : MonoBehaviour
         PlayerData = new PlayerData();
         PlayerData.Coin = 0;
         PlayerData.Health = PlayerData.MAX_HEALTH;
+        PlayerData.Name = DateTime.Now.ToString("G");
+        PlayerData.CurrentLevel = SceneLoader.Scene.Level1;
     }
 
 
@@ -47,21 +62,36 @@ public class GameManager : MonoBehaviour
     public void NewGame()
     {
         InitPlayerData();
+
+        GameNameList.Add(PlayerData.Name);
         SceneLoader.LoadScene(SceneLoader.Scene.Level1);
     }
 
     public void SaveGame()
     {
+
+        if (!GameNameList.Contains(PlayerData.Name))
+        {
+            GameNameList.Add(PlayerData.Name);
+        }
+
+
         string data = JsonUtility.ToJson(PlayerData);
 
-        PlayerPrefs.SetString("PlayerData", data);
+        string gameListData = string.Join(',', GameNameList);
+
+
+
+        PlayerPrefs.SetString("GameNameList", gameListData);
+
+        PlayerPrefs.SetString(PlayerData.Name, data);
     }
 
-    public void LoadGame()
+    public void LoadGame(string gameName)
     {
-        if (PlayerPrefs.HasKey("PlayerData"))
+        if (PlayerPrefs.HasKey(gameName))
         {
-            string data = PlayerPrefs.GetString("PlayerData");
+            string data = PlayerPrefs.GetString(gameName);
             PlayerData = JsonUtility.FromJson<PlayerData>(data);
         }
         else
@@ -69,6 +99,6 @@ public class GameManager : MonoBehaviour
             InitPlayerData();
         }
 
-        SceneLoader.LoadScene(SceneLoader.Scene.Level1);
+        SceneLoader.LoadScene(PlayerData.CurrentLevel);
     }
 }
