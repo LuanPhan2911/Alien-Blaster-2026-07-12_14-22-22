@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 
 
 
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -33,7 +35,9 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("GameNameList"))
         {
             string gameListData = PlayerPrefs.GetString("GameNameList");
-            GameNameList = gameListData.Split(',').ToList<string>();
+
+            GameNameList = gameListData.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+
         }
 
 
@@ -54,7 +58,7 @@ public class GameManager : MonoBehaviour
         PlayerData.Coin = 0;
         PlayerData.Health = PlayerData.MAX_HEALTH;
         PlayerData.Name = DateTime.Now.ToString("G");
-        PlayerData.CurrentLevel = SceneLoader.Scene.Level1;
+        PlayerData.SceneLevel = SceneLoader.Scene.Level1;
     }
 
 
@@ -74,16 +78,20 @@ public class GameManager : MonoBehaviour
         {
             GameNameList.Add(PlayerData.Name);
         }
+        SaveGameList();
+        SavePlayerData();
 
 
-        string data = JsonUtility.ToJson(PlayerData);
-
+        PlayerPrefs.Save();
+    }
+    private void SaveGameList()
+    {
         string gameListData = string.Join(',', GameNameList);
-
-
-
         PlayerPrefs.SetString("GameNameList", gameListData);
-
+    }
+    private void SavePlayerData()
+    {
+        string data = JsonUtility.ToJson(PlayerData);
         PlayerPrefs.SetString(PlayerData.Name, data);
     }
 
@@ -99,6 +107,17 @@ public class GameManager : MonoBehaviour
             InitPlayerData();
         }
 
-        SceneLoader.LoadScene(PlayerData.CurrentLevel);
+        SceneLoader.LoadScene(PlayerData.SceneLevel);
+    }
+
+    public void DeleteSavedGames(string gameName)
+    {
+
+        GameNameList.Remove(gameName);
+        SaveGameList();
+
+        PlayerPrefs.DeleteKey(gameName);
+
+        PlayerPrefs.Save();
     }
 }

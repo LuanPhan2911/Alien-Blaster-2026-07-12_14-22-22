@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SavedGameUI : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class SavedGameUI : MonoBehaviour
 
 
     [SerializeField] private Transform _buttonContainerTransform;
+
+    [SerializeField] private Button _backButton;
+
+
     public void Show()
     {
         gameObject.SetActive(true);
@@ -18,6 +23,11 @@ public class SavedGameUI : MonoBehaviour
     }
     private void Start()
     {
+
+        _backButton.onClick.AddListener(() =>
+        {
+            Hide();
+        });
 
         foreach (var savedGame in GameManager.Instance.GameNameList)
         {

@@ -32,7 +32,6 @@ public class MainMenuUI : MonoBehaviour
     private void OnLoadSavedGameClicked()
     {
         // load list saved games UI
-        Hide();
         _savedGameUI.Show();
 
 

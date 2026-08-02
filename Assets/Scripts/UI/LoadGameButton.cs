@@ -10,6 +10,8 @@ public class LoadGameButton : MonoBehaviour
 
     [SerializeField] private TMP_Text _gameNameText;
 
+    [SerializeField] private DoubleClickButton _deleteButton;
+
     private string _gameName;
 
     public void SetGameName(string gameName)
@@ -22,11 +24,17 @@ public class LoadGameButton : MonoBehaviour
 
     private void Start()
     {
-        _loadGameButton.onClick.AddListener(OnLoadGameButtonClicked);
+        _loadGameButton.onClick.AddListener(() =>
+        {
+            GameManager.Instance.LoadGame(_gameName);
+        });
+
+        _deleteButton.OnDoubleClick.AddListener(() =>
+        {
+            GameManager.Instance.DeleteSavedGames(_gameName);
+            Destroy(gameObject);
+        });
     }
 
-    private void OnLoadGameButtonClicked()
-    {
-        GameManager.Instance.LoadGame(_gameName);
-    }
+
 }

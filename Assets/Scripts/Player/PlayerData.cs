@@ -8,7 +8,7 @@ public class PlayerData
 
     public string Name;
 
-    public SceneLoader.Scene CurrentLevel;
+    public SceneLoader.Scene SceneLevel;
 
     public const int MAX_HEALTH = 6;
 
