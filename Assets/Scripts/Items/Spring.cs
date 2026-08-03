@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Spring : MonoBehaviour
@@ -5,6 +6,10 @@ public class Spring : MonoBehaviour
 
 
     [SerializeField] private Sprite _sprungSprite;
+
+    [SerializeField] private BoxCollider2D _collider2d;
+
+    [SerializeField] private float _duration = 0.5f;
 
     private SpriteRenderer _spriteRenderer;
     private Sprite _originalSprite;
@@ -21,17 +26,31 @@ public class Spring : MonoBehaviour
     {
         if (collision.collider.TryGetComponent(out Player player))
         {
-            _spriteRenderer.sprite = _sprungSprite;
-            _audioSource.Play();
+
+
+            float playerFeetY = collision.collider.bounds.min.y;
+
+            float pringTopY = _collider2d.bounds.max.y;
+
+            float threshold = 0.1f;
+
+            if (playerFeetY >= pringTopY - threshold)
+            {
+                _spriteRenderer.sprite = _sprungSprite;
+                _audioSource.Play();
+
+                StartCoroutine(ReturnToSpringCoroutine());
+            }
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private IEnumerator ReturnToSpringCoroutine()
     {
-        if (collision.collider.TryGetComponent(out Player player))
-        {
-            _spriteRenderer.sprite = _originalSprite;
-        }
+        yield return new WaitForSeconds(_duration);
+
+        _spriteRenderer.sprite = _originalSprite;
     }
+
+
 
 }
