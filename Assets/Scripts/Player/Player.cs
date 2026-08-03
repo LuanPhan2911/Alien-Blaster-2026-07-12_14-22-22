@@ -14,7 +14,8 @@ public partial class Player : MonoBehaviour
     [SerializeField] private float _jumpVelocity = 5f;
     [SerializeField] private float _jumpDuration = 0.5f;
     [SerializeField] private float _horizontalMaxSpeed = 5f;
-    [SerializeField] private LayerMask _layerMask;
+
+    [SerializeField] private LayerMask _groundLayerMask;
     [SerializeField] private float _feetSize = 0.6f;
 
     [SerializeField] private float _groundAcceleration = 10f;
@@ -34,6 +35,8 @@ public partial class Player : MonoBehaviour
 
     private AudioSource _audioSource;
     private PlayerInput _playerInput;
+    private PlayerFalling _playerFalling;
+    private PlayerSwimming _playerSwimming;
 
 
     private float _horizontalVelocity;
@@ -41,6 +44,8 @@ public partial class Player : MonoBehaviour
     private float _jumpEndTime;
     private int _jumpRemain;
     private PlayerData _playerData;
+
+    private float _horizontalSwimmingSpeed;
 
 
     public int Coin { get => _playerData.Coin; private set => _playerData.Coin = value; }
@@ -64,24 +69,21 @@ public partial class Player : MonoBehaviour
         _knockbackReceiver = GetComponent<KnockbackReceiver>();
         _damageFlash = GetComponent<DamageFlash>();
 
+        _playerFalling = GetComponent<PlayerFalling>();
+
+        _playerSwimming = GetComponent<PlayerSwimming>();
+
 
     }
     private void Start()
     {
         _playerData = GameManager.Instance.PlayerData;
 
+        _horizontalSwimmingSpeed = _horizontalMaxSpeed / 2;
+
         // Update the UI with the current coin count at the start of the game
         OnCoinChanged?.Invoke(this, Coin);
         OnHealthChanged?.Invoke(this, Health);
-    }
-
-    private void OnDrawGizmos()
-    {
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.bounds.extents.y);
-        Gizmos.color = Color.red;
-        //Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
-        Gizmos.DrawCube(origin + Vector2.down * 0.05f, new Vector3(_feetSize, 0.1f, 0));
     }
 
 
@@ -109,7 +111,10 @@ public partial class Player : MonoBehaviour
             _verticalVelocity = _jumpVelocity;
         }
 
-        float targetedHorizontalVelocity = horizontalInput * _horizontalMaxSpeed;
+        float horizontalSpeed = _playerSwimming.IsOnWater ? _horizontalSwimmingSpeed : _horizontalMaxSpeed;
+
+        float targetedHorizontalVelocity = horizontalInput * horizontalSpeed;
+
         float acceleration = IsOnSnow ? _snowAcceleration : _groundAcceleration;
 
         _horizontalVelocity = Mathf.Lerp(_horizontalVelocity, targetedHorizontalVelocity, Time.deltaTime * acceleration);
@@ -123,6 +128,8 @@ public partial class Player : MonoBehaviour
     private void FixedUpdate()
     {
         if (_knockbackReceiver.IsKnockbacked) return;
+        if (_playerFalling.IsFalling) return;
+
         _rb.linearVelocity = new Vector2(_horizontalVelocity, _verticalVelocity);
     }
 
@@ -132,7 +139,7 @@ public partial class Player : MonoBehaviour
         IsOnSnow = false;
         Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.bounds.extents.y);
 
-        RaycastHit2D hit = Physics2D.BoxCast(origin, new Vector2(_feetSize, 0.1f), 0, Vector2.down, 0.1f, _layerMask);
+        RaycastHit2D hit = Physics2D.BoxCast(origin, new Vector2(_feetSize, 0.1f), 0, Vector2.down, 0.1f, _groundLayerMask);
 
 
         if (hit.collider != null)
@@ -201,6 +208,10 @@ public partial class Player : MonoBehaviour
 
     }
 
+    public LayerMask GetGroundLayerMask()
+    {
+        return _groundLayerMask;
+    }
 
 
 

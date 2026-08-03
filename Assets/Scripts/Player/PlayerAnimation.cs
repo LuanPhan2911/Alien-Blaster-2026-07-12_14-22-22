@@ -12,6 +12,10 @@ public class PlayerAnimation : MonoBehaviour
 
     const string IS_CLIMBING = "IsClimbing";
 
+    const string IS_FALLING = "IsFalling";
+
+    const string IS_SWIMMING = "IsSwimming";
+
 
 
 
@@ -33,5 +37,14 @@ public class PlayerAnimation : MonoBehaviour
     public void SetClimbing(bool isClimbing)
     {
         animator.SetBool(IS_CLIMBING, isClimbing);
+    }
+
+    public void SetFalling(bool isFalling)
+    {
+        animator.SetBool(IS_FALLING, isFalling);
+    }
+    public void SetSwimming(bool isSwimming)
+    {
+        animator.SetBool(IS_SWIMMING, isSwimming);
     }
 }

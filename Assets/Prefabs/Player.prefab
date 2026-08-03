@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 8093926656468118735}
   - component: {fileID: 7683409679618410710}
   - component: {fileID: 6169132776630504632}
+  - component: {fileID: 4854416409012698757}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -188,7 +189,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.859375, y: 1.1953125}
+  m_Size: {x: 0.85, y: 1}
   m_Direction: 0
 --- !u!82 &8339975547560672444
 AudioSource:
@@ -312,7 +313,7 @@ MonoBehaviour:
   _jumpVelocity: 5
   _jumpDuration: 0.5
   _horizontalMaxSpeed: 4
-  _layerMask:
+  _groundLayerMask:
     serializedVersion: 2
     m_Bits: 320
   _feetSize: 1
@@ -402,6 +403,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPassThroughPlatform
   _colider2d: {fileID: 6989032475678194400}
+  _delayBeforePassThrough: 0.1
+  _passThroughDuration: 0.5
+  _passThroughAnimationDuration: 0.25
+--- !u!114 &4854416409012698757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577240107966679132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c03df7cd7d82a948ac6a089ab64d6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerFalling
+  _fallingVelocityThreshhold: 10
+  _fallingStunedDuration: 0.5
+  _playerCollider: {fileID: 6989032475678194400}
+  _fallingColliderSizeY: 1
+  _fallingSound: {fileID: 8300000, guid: ff9fad9534614b849b1a2eae6a07af39, type: 3}
+  IsFalling: 0
 --- !u!1 &3866191322624772891
 GameObject:
   m_ObjectHideFlags: 0
