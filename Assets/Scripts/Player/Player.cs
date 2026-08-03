@@ -37,6 +37,7 @@ public partial class Player : MonoBehaviour
     private PlayerInput _playerInput;
     private PlayerFalling _playerFalling;
     private PlayerSwimming _playerSwimming;
+    private PlayerLoopSound _playerLoopSound;
 
 
     private float _horizontalVelocity;
@@ -72,6 +73,8 @@ public partial class Player : MonoBehaviour
         _playerFalling = GetComponent<PlayerFalling>();
 
         _playerSwimming = GetComponent<PlayerSwimming>();
+
+        _playerLoopSound = GetComponent<PlayerLoopSound>();
 
 
     }
@@ -124,6 +127,7 @@ public partial class Player : MonoBehaviour
         // Mathf.SmoothDamp: Slow at first, then fast, then slow again as it approaches the target.
 
         UpdateSprite();
+        PlayLoopSound();
     }
     private void FixedUpdate()
     {
@@ -169,6 +173,21 @@ public partial class Player : MonoBehaviour
         else if (_horizontalVelocity < 0)
         {
             _spriteRenderer.flipX = true;
+        }
+    }
+    private void PlayLoopSound()
+    {
+        if (IsGrounded && Math.Abs(_horizontalVelocity) > 0.5f)
+        {
+            _playerLoopSound.PlayWalkingSound();
+        }
+        else if (_playerSwimming.IsOnWater && Math.Abs(_horizontalVelocity) > 0.5f)
+        {
+            _playerLoopSound.PlaySwimmingSound();
+        }
+        else
+        {
+            _playerLoopSound.StopSound();
         }
 
 

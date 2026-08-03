@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 7683409679618410710}
   - component: {fileID: 6169132776630504632}
   - component: {fileID: 4854416409012698757}
+  - component: {fileID: 6848340107228430087}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -424,6 +425,22 @@ MonoBehaviour:
   _fallingColliderSizeY: 1
   _fallingSound: {fileID: 8300000, guid: ff9fad9534614b849b1a2eae6a07af39, type: 3}
   IsFalling: 0
+--- !u!114 &6848340107228430087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577240107966679132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e06c42bd3b38dd447b9a4151a82e852c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSwimming
+  _waterLayerMask:
+    serializedVersion: 2
+    m_Bits: 16
+  IsOnWater: 0
 --- !u!1 &3866191322624772891
 GameObject:
   m_ObjectHideFlags: 0
