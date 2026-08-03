@@ -10,6 +10,10 @@ public class PlayerAnimation : MonoBehaviour
     const string HORIZONTAL = "Horizontal";
     const string IS_JUMPING = "IsJumping";
 
+    const string IS_CLIMBING = "IsClimbing";
+
+
+
 
     private void Awake()
     {
@@ -25,5 +29,9 @@ public class PlayerAnimation : MonoBehaviour
     public void SetHorizontal(float horizontal)
     {
         animator.SetFloat(HORIZONTAL, Mathf.Abs(horizontal));
+    }
+    public void SetClimbing(bool isClimbing)
+    {
+        animator.SetBool(IS_CLIMBING, isClimbing);
     }
 }

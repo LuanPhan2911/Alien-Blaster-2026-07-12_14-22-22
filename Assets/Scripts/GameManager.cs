@@ -73,6 +73,13 @@ public class GameManager : MonoBehaviour
 
     public void SaveGame()
     {
+        if (PlayerData == null)
+        {
+            Debug.LogWarning("PlayerData is null. Cannot save game.");
+
+            InitPlayerData();
+            return;
+        }
 
         if (!GameNameList.Contains(PlayerData.Name))
         {

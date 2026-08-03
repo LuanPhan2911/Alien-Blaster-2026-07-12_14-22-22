@@ -13,14 +13,15 @@ GameObject:
   - component: {fileID: 8352900041993780205}
   - component: {fileID: 4523010127683356299}
   - component: {fileID: 6989032475678194400}
-  - component: {fileID: 5550621519107340329}
-  - component: {fileID: 7612940486204956263}
   - component: {fileID: 8339975547560672444}
   - component: {fileID: 1621183844149338643}
+  - component: {fileID: 5550621519107340329}
+  - component: {fileID: 7612940486204956263}
   - component: {fileID: 8458118377244900885}
   - component: {fileID: 8093926656468118735}
   - component: {fileID: 7683409679618410710}
-  m_Layer: 6
+  - component: {fileID: 6169132776630504632}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -90,7 +91,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1891796409
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 402502597922571196, guid: 73d4dae70d4022844a443f1de8996d64, type: 3}
@@ -189,42 +190,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.859375, y: 1.1953125}
   m_Direction: 0
---- !u!114 &5550621519107340329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 577240107966679132}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 489cfd8e36569f247ab0b83542dcd52e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player
-  IsGrounded: 0
-  IsOnSnow: 0
-  _jumpVelocity: 5
-  _jumpDuration: 0.5
-  _horizontalMaxSpeed: 4
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 135
-  _feetSize: 1
-  _groundAcceleration: 10
-  _snowAcceleration: 1
-  _hurtSound: {fileID: 8300000, guid: 0d1a58769e7e82f44a3d3a95ff901221, type: 3}
---- !u!114 &7612940486204956263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 577240107966679132}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fd389ea37417544e9817298543153c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
 --- !u!82 &8339975547560672444
 AudioSource:
   m_ObjectHideFlags: 0
@@ -330,6 +295,42 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 577240107966679132}
   m_Enabled: 1
+--- !u!114 &5550621519107340329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577240107966679132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 489cfd8e36569f247ab0b83542dcd52e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  IsGrounded: 0
+  IsOnSnow: 0
+  _jumpVelocity: 5
+  _jumpDuration: 0.5
+  _horizontalMaxSpeed: 4
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 320
+  _feetSize: 1
+  _groundAcceleration: 10
+  _snowAcceleration: 1
+  _hurtSound: {fileID: 8300000, guid: 0d1a58769e7e82f44a3d3a95ff901221, type: 3}
+--- !u!114 &7612940486204956263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577240107966679132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd389ea37417544e9817298543153c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
 --- !u!114 &8458118377244900885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,6 +389,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
   _flashDuration: 0.2
   _flashColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &6169132776630504632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577240107966679132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4b0d0d7cbcd5e247a09ec8c86903cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPassThroughPlatform
+  _colider2d: {fileID: 6989032475678194400}
 --- !u!1 &3866191322624772891
 GameObject:
   m_ObjectHideFlags: 0
