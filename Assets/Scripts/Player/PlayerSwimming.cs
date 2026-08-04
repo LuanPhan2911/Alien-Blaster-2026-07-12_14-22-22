@@ -6,10 +6,12 @@ public class PlayerSwimming : MonoBehaviour
     [SerializeField] private LayerMask _waterLayerMask;
 
     private PlayerAnimation _playerAnimation;
+    private PlayerLoopSound _playerLoopSound;
 
     private void Awake()
     {
         _playerAnimation = GetComponent<PlayerAnimation>();
+        _playerLoopSound = GetComponent<PlayerLoopSound>();
     }
 
     public bool IsOnWater = false;
@@ -19,8 +21,10 @@ public class PlayerSwimming : MonoBehaviour
         if (_waterLayerMask.Contains(collision.gameObject.layer))
         {
             IsOnWater = true;
-
             _playerAnimation.SetSwimming(true);
+            _playerLoopSound.PlaySwimmingSound();
+
+
         }
     }
 
@@ -30,7 +34,8 @@ public class PlayerSwimming : MonoBehaviour
         {
             IsOnWater = false;
 
-            _playerAnimation?.SetSwimming(false);
+            _playerAnimation.SetSwimming(false);
+            _playerLoopSound.Stop();
         }
     }
 }

@@ -47,4 +47,13 @@ public class PlayerAnimation : MonoBehaviour
     {
         animator.SetBool(IS_SWIMMING, isSwimming);
     }
+
+    public void PauseCurrentAnimation()
+    {
+        animator.speed = 0f;
+    }
+    public void StartCurrentAnimation()
+    {
+        animator.speed = 1f;
+    }
 }

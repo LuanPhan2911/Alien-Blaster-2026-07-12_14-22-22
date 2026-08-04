@@ -6,83 +6,52 @@ public partial class Player : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    public bool IsGrounded;
+
     public const string PLAYER_TAG = "Player";
     public const string PLAYER_MASK = "Player";
     public bool IsOnSnow;
+    public float HorizontalVelocity;
+    public float VerticalVelocity;
 
-    [SerializeField] private float _jumpVelocity = 5f;
-    [SerializeField] private float _jumpDuration = 0.5f;
-    [SerializeField] private float _horizontalMaxSpeed = 5f;
+    public bool IsStunned = false;
+
+    public PlayerAnimation PlayerAnimation { get; private set; }
+    public SpriteRenderer SpriteRenderer { get; private set; }
+    public Rigidbody2D Rb { get; private set; }
+    public PlayerInput PlayerInput { get; private set; }
+    public PlayerOneShotSound PlayerOneShotSound { get; private set; }
+    public PlayerLoopSound PlayerLoopSound { get; private set; }
+    public PlayerSprite PlayerSprite { get; private set; }
 
     [SerializeField] private LayerMask _groundLayerMask;
-    [SerializeField] private float _feetSize = 0.6f;
-
-    [SerializeField] private float _groundAcceleration = 10f;
-    [SerializeField] private float _snowAcceleration = 1f;
-
     [SerializeField] private AudioClip _hurtSound;
 
-
-
-
-    private PlayerAnimation _playerAnimation;
     private KnockbackReceiver _knockbackReceiver;
-    private Rigidbody2D _rb;
-    private SpriteRenderer _spriteRenderer;
-
     private DamageFlash _damageFlash;
-
-    private AudioSource _audioSource;
-    private PlayerInput _playerInput;
-    private PlayerFalling _playerFalling;
-    private PlayerSwimming _playerSwimming;
-    private PlayerLoopSound _playerLoopSound;
-
-
-    private float _horizontalVelocity;
-    private float _verticalVelocity;
-    private float _jumpEndTime;
-    private int _jumpRemain;
+    private PlayerClimbing _playerClimbing;
     private PlayerData _playerData;
-
-    private float _horizontalSwimmingSpeed;
-
-
     public int Coin { get => _playerData.Coin; private set => _playerData.Coin = value; }
     public int Health { get => _playerData.Health; private set => _playerData.Health = value; }
 
     public static event EventHandler<int> OnCoinChanged;
     public static event EventHandler<int> OnHealthChanged;
-
-
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-
-        _playerAnimation = GetComponent<PlayerAnimation>();
-
-        _audioSource = GetComponent<AudioSource>();
-
-        _playerInput = GetComponent<PlayerInput>();
+        Rb = GetComponent<Rigidbody2D>();
+        SpriteRenderer = GetComponent<SpriteRenderer>();
+        PlayerAnimation = GetComponent<PlayerAnimation>();
+        PlayerInput = GetComponent<PlayerInput>();
+        PlayerOneShotSound = GetComponent<PlayerOneShotSound>();
+        PlayerLoopSound = GetComponent<PlayerLoopSound>();
+        PlayerSprite = GetComponent<PlayerSprite>();
 
         _knockbackReceiver = GetComponent<KnockbackReceiver>();
         _damageFlash = GetComponent<DamageFlash>();
-
-        _playerFalling = GetComponent<PlayerFalling>();
-
-        _playerSwimming = GetComponent<PlayerSwimming>();
-
-        _playerLoopSound = GetComponent<PlayerLoopSound>();
-
-
+        _playerClimbing = GetComponent<PlayerClimbing>();
     }
     private void Start()
     {
         _playerData = GameManager.Instance.PlayerData;
-
-        _horizontalSwimmingSpeed = _horizontalMaxSpeed / 2;
 
         // Update the UI with the current coin count at the start of the game
         OnCoinChanged?.Invoke(this, Coin);
@@ -92,126 +61,46 @@ public partial class Player : MonoBehaviour
 
 
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        CheckGrouding();
-
-        float horizontalInput = _playerInput.actions["Move"].ReadValue<Vector2>().x;
-
-        _verticalVelocity = _rb.linearVelocityY;
-
-
-        if (_playerInput.actions["Jump"].WasPressedThisFrame() && _jumpRemain > 0)
+        if (IsStunned)
         {
-            _jumpEndTime = Time.time + _jumpDuration;
-            _jumpRemain--;
-
-            _audioSource.Play();
+            HorizontalVelocity = 0;
+            VerticalVelocity = 0;
         }
-        if (_playerInput.actions["Jump"].IsPressed() && Time.time < _jumpEndTime)
-        {
-            _verticalVelocity = _jumpVelocity;
-        }
-
-        float horizontalSpeed = _playerSwimming.IsOnWater ? _horizontalSwimmingSpeed : _horizontalMaxSpeed;
-
-        float targetedHorizontalVelocity = horizontalInput * horizontalSpeed;
-
-        float acceleration = IsOnSnow ? _snowAcceleration : _groundAcceleration;
-
-        _horizontalVelocity = Mathf.Lerp(_horizontalVelocity, targetedHorizontalVelocity, Time.deltaTime * acceleration);
-
-        // Mathf.MoveTowards: Linearly interpolates between two values by a maximum change. 
-        // Mathf.Lerp: Fast at first, then slows down as it approaches the target.
-        // Mathf.SmoothDamp: Slow at first, then fast, then slow again as it approaches the target.
-
-        UpdateSprite();
-        PlayLoopSound();
     }
+
     private void FixedUpdate()
     {
+
+        if (IsStunned) return;
         if (_knockbackReceiver.IsKnockbacked) return;
-        if (_playerFalling.IsFalling) return;
 
-        _rb.linearVelocity = new Vector2(_horizontalVelocity, _verticalVelocity);
-    }
-
-    private void CheckGrouding()
-    {
-        IsGrounded = false;
-        IsOnSnow = false;
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.bounds.extents.y);
-
-        RaycastHit2D hit = Physics2D.BoxCast(origin, new Vector2(_feetSize, 0.1f), 0, Vector2.down, 0.1f, _groundLayerMask);
-
-
-        if (hit.collider != null)
+        if (_playerClimbing.IsClimbing)
         {
-            IsGrounded = true;
-            IsOnSnow = hit.collider.CompareTag(Ground.SNOW_TAG);
-        }
-
-        if (IsGrounded && _rb.linearVelocity.y == 0f)
-        {
-            _jumpRemain = 2;
-        }
-
-    }
-
-    private void UpdateSprite()
-    {
-
-        _playerAnimation.SetHorizontal(_horizontalVelocity);
-        _playerAnimation.SetJumping(!IsGrounded);
-
-
-        if (_horizontalVelocity > 0)
-        {
-            _spriteRenderer.flipX = false;
-        }
-        else if (_horizontalVelocity < 0)
-        {
-            _spriteRenderer.flipX = true;
-        }
-    }
-    private void PlayLoopSound()
-    {
-        if (IsGrounded && Math.Abs(_horizontalVelocity) > 0.5f)
-        {
-            _playerLoopSound.PlayWalkingSound();
-        }
-        else if (_playerSwimming.IsOnWater && Math.Abs(_horizontalVelocity) > 0.5f)
-        {
-            _playerLoopSound.PlaySwimmingSound();
+            HorizontalVelocity = 0;
+            Rb.gravityScale = 0f;
         }
         else
         {
-            _playerLoopSound.StopSound();
+            Rb.gravityScale = 1;
         }
 
-
+        Rb.linearVelocity = new Vector2(HorizontalVelocity, VerticalVelocity);
     }
+
+
 
     public void AddCoin()
     {
         Coin++;
         OnCoinChanged?.Invoke(this, Coin);
     }
-    public void PlaySound(AudioClip clip)
-    {
-        _audioSource.PlayOneShot(clip);
-    }
-
-
     public void TakeDamage()
     {
         Health--;
-
-        _audioSource.PlayOneShot(_hurtSound);
-
+        PlayerOneShotSound.Play(_hurtSound);
         OnHealthChanged?.Invoke(this, Health);
-
         _damageFlash.Flash();
         if (Health <= 0)
         {
@@ -226,7 +115,6 @@ public partial class Player : MonoBehaviour
         _knockbackReceiver.Knockback(direction);
 
     }
-
     public LayerMask GetGroundLayerMask()
     {
         return _groundLayerMask;

@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 364465260463809571}
   - component: {fileID: 7435551322263390599}
   - component: {fileID: 4284797600609081478}
+  - component: {fileID: 6244947118939746364}
   - component: {fileID: 2486012235741584658}
   - component: {fileID: 8366529090099463116}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Spring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,6 +129,52 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.3}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 0.5234375}
+    newSize: {x: 1, y: 0.5234375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.9, y: 0.05}
+  m_EdgeRadius: 0
+--- !u!61 &6244947118939746364
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5192685994582262451}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,7 +185,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 0.5234375}
+  m_Size: {x: 1, y: 0.5}
   m_EdgeRadius: 0
 --- !u!114 &2486012235741584658
 MonoBehaviour:
@@ -153,6 +200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spring
   _sprungSprite: {fileID: -4775003707865581455, guid: c80ce69df52beaf4f9fdd17c8d22b0f1, type: 3}
+  _collider2d: {fileID: 4284797600609081478}
+  _duration: 0.25
 --- !u!82 &8366529090099463116
 AudioSource:
   m_ObjectHideFlags: 0

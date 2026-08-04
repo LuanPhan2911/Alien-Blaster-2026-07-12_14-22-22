@@ -6,75 +6,55 @@ public class PlayerPassThroughPlatform : MonoBehaviour
 {
 
 
-    [SerializeField] private Collider2D _colider2d;
 
-    [SerializeField] private float _delayBeforePassThrough = 0.1f;
+    [SerializeField] private float _delayAnimation = 0.1f;
+    [SerializeField] private float _ignoreCollisonDuration = 0.5f;
+    [SerializeField] private float _animationDuration = 0.25f;
+    [SerializeField] private LayerMask _platformLayer;
 
-    [SerializeField] private float _passThroughDuration = 0.5f;
-
-    [SerializeField] private float _passThroughAnimationDuration = 0.3f;
-
-
-
-
-
-    private OneWayPlatformPassThrough _currentPlatform = null;
-
+    private Collider2D _currentPlatformCollider = null;
     private PlayerInput _playerInput;
     private PlayerAnimation _playerAnimation;
-
-
-
+    private PlayerSprite _playerSprite;
     private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
         _playerAnimation = GetComponent<PlayerAnimation>();
+        _playerSprite = GetComponent<PlayerSprite>();
     }
-
-
     private void Update()
     {
 
-        if (_currentPlatform != null)
+        if (_currentPlatformCollider != null)
         {
             if (_playerInput.actions["PassThrough"].IsPressed())
             {
-                _currentPlatform.PassThrough(_colider2d, _passThroughDuration);
+                _playerSprite.IgnoreCollision(_currentPlatformCollider, _ignoreCollisonDuration);
                 StartCoroutine(PassThroughAnimationCorountine());
             }
         }
     }
-
-
-
     private IEnumerator PassThroughAnimationCorountine()
     {
 
-        yield return new WaitForSeconds(_delayBeforePassThrough);
+        yield return new WaitForSeconds(_delayAnimation);
         _playerAnimation.SetClimbing(true);
-        yield return new WaitForSeconds(_passThroughAnimationDuration);
+        yield return new WaitForSeconds(_animationDuration);
         _playerAnimation.SetClimbing(false);
     }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out OneWayPlatformPassThrough platform))
+        if (_platformLayer.Contains(collision.gameObject.layer))
         {
-            _currentPlatform = platform;
-
-
+            _currentPlatformCollider = collision.collider;
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out OneWayPlatformPassThrough platform))
+        if (_platformLayer.Contains(collision.gameObject.layer))
         {
-            if (_currentPlatform == platform)
-            {
-                _currentPlatform = null;
-
-            }
+            _currentPlatformCollider = null;
         }
     }
 

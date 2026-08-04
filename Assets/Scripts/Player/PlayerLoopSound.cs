@@ -26,7 +26,7 @@ public class PlayerLoopSound : MonoBehaviour
 
         _loopAudioSource.enabled = true;
     }
-    public void StopSound()
+    public void Stop()
     {
         _loopAudioSource.clip = null;
         _loopAudioSource.enabled = false;

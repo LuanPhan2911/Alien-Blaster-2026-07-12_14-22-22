@@ -311,17 +311,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 489cfd8e36569f247ab0b83542dcd52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  IsGrounded: 0
   IsOnSnow: 0
-  _jumpVelocity: 5
-  _jumpDuration: 0.5
-  _horizontalMaxSpeed: 4
+  HorizontalVelocity: 0
+  VerticalVelocity: 0
   _groundLayerMask:
     serializedVersion: 2
     m_Bits: 320
-  _feetSize: 1
-  _groundAcceleration: 10
-  _snowAcceleration: 1
   _hurtSound: {fileID: 8300000, guid: 0d1a58769e7e82f44a3d3a95ff901221, type: 3}
 --- !u!114 &7612940486204956263
 MonoBehaviour:
@@ -416,17 +411,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 577240107966679132}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c03df7cd7d82a948ac6a089ab64d6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFalling
+  IsFalling: 0
   _fallingVelocityThreshhold: 10
   _fallingStunedDuration: 0.5
-  _playerCollider: {fileID: 6989032475678194400}
   _fallingColliderSizeY: 1
   _fallingSound: {fileID: 8300000, guid: ff9fad9534614b849b1a2eae6a07af39, type: 3}
-  IsFalling: 0
 --- !u!114 &6848340107228430087
 MonoBehaviour:
   m_ObjectHideFlags: 0
