@@ -28,7 +28,7 @@ public class PlayerMoving : MonoBehaviour
 
         float horizontalInput = _player.PlayerInput.actions["Move"].ReadValue<Vector2>().x;
 
-        float horizontalSpeed = _playerSwimming.IsOnWater ? _horizontalSwimmingSpeed : _horizontalMaxSpeed;
+        float horizontalSpeed = _playerSwimming.IsSwimming ? _horizontalSwimmingSpeed : _horizontalMaxSpeed;
 
         float targetedHorizontalVelocity = horizontalInput * horizontalSpeed;
 

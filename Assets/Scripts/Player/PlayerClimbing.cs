@@ -28,12 +28,14 @@ public class PlayerClimbing : MonoBehaviour
                 IsClimbing = true;
                 _player.PlayerAnimation.SetClimbing(true);
                 _player.PlayerAnimation.StartCurrentAnimation();
+                _player.VerticalVelocity = verticalInput * _climbingSpeed;
             }
             else
             {
                 // player is not climbing
                 if (IsClimbing)
                 {
+                    _player.VerticalVelocity = 0f;
                     _player.PlayerAnimation.PauseCurrentAnimation();
                 }
 
@@ -53,9 +55,12 @@ public class PlayerClimbing : MonoBehaviour
                     IsClimbing = false;
                     _player.PlayerAnimation.SetClimbing(false);
                     _player.PlayerAnimation.StartCurrentAnimation();
+                    _player.VerticalVelocity = 0f;
                 }
             }
-            _player.VerticalVelocity = verticalInput * _climbingSpeed;
+
+
+
 
         }
         else
@@ -63,6 +68,7 @@ public class PlayerClimbing : MonoBehaviour
             IsClimbing = false;
             _player.PlayerAnimation.SetClimbing(false);
             _player.PlayerAnimation.StartCurrentAnimation();
+
         }
     }
 

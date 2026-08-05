@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class GrassPlatform : MonoBehaviour
+public class Platform : MonoBehaviour
 {
 
     [SerializeField] private Transform _grassLeft;

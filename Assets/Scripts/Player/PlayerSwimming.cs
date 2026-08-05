@@ -14,13 +14,13 @@ public class PlayerSwimming : MonoBehaviour
         _playerLoopSound = GetComponent<PlayerLoopSound>();
     }
 
-    public bool IsOnWater = false;
+    public bool IsSwimming = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (_waterLayerMask.Contains(collision.gameObject.layer))
         {
-            IsOnWater = true;
+            IsSwimming = true;
             _playerAnimation.SetSwimming(true);
             _playerLoopSound.PlaySwimmingSound();
 
@@ -32,7 +32,7 @@ public class PlayerSwimming : MonoBehaviour
     {
         if (_waterLayerMask.Contains(collision.gameObject.layer))
         {
-            IsOnWater = false;
+            IsSwimming = false;
 
             _playerAnimation.SetSwimming(false);
             _playerLoopSound.Stop();

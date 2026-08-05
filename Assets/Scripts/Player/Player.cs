@@ -30,6 +30,7 @@ public partial class Player : MonoBehaviour
     private DamageFlash _damageFlash;
     private PlayerClimbing _playerClimbing;
     private PlayerData _playerData;
+    private PlayerSwimming _playerSwimming;
     public int Coin { get => _playerData.Coin; private set => _playerData.Coin = value; }
     public int Health { get => _playerData.Health; private set => _playerData.Health = value; }
 
@@ -48,6 +49,7 @@ public partial class Player : MonoBehaviour
         _knockbackReceiver = GetComponent<KnockbackReceiver>();
         _damageFlash = GetComponent<DamageFlash>();
         _playerClimbing = GetComponent<PlayerClimbing>();
+        _playerSwimming = GetComponent<PlayerSwimming>();
     }
     private void Start()
     {
@@ -68,14 +70,6 @@ public partial class Player : MonoBehaviour
             HorizontalVelocity = 0;
             VerticalVelocity = 0;
         }
-    }
-
-    private void FixedUpdate()
-    {
-
-        if (IsStunned) return;
-        if (_knockbackReceiver.IsKnockbacked) return;
-
         if (_playerClimbing.IsClimbing)
         {
             HorizontalVelocity = 0;
@@ -85,6 +79,22 @@ public partial class Player : MonoBehaviour
         {
             Rb.gravityScale = 1;
         }
+        if (_playerSwimming.IsSwimming)
+        {
+            VerticalVelocity = Rb.linearVelocityY;
+        }
+
+
+
+    }
+
+    private void FixedUpdate()
+    {
+
+        if (IsStunned) return;
+        if (_knockbackReceiver.IsKnockbacked) return;
+
+
 
         Rb.linearVelocity = new Vector2(HorizontalVelocity, VerticalVelocity);
     }

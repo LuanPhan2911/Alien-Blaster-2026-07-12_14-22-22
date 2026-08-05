@@ -6,27 +6,37 @@ public class WaterParalax : MonoBehaviour
 
 
     [SerializeField] private float _paralaxSpeed = 0.5f;
+    [SerializeField] private Transform _topTransform;
+    [SerializeField] private Transform _bottomTransform;
+    [SerializeField] private BoxCollider2D _boxCollider2d;
 
-    [SerializeField] private Transform _component;
 
-
-    private float _startX;
-    private float _componentSize = 1f;
+    private float _startTransformX;
+    private float _startOffsetColliderX;
+    private float _disttance = 1f;
 
     private void Start()
     {
-        _startX = _component.localPosition.x;
+        _startTransformX = _topTransform.localPosition.x;
+        _startOffsetColliderX = _boxCollider2d.offset.x;
 
     }
 
     private void Update()
     {
-        _component.localPosition +=
+        _topTransform.localPosition +=
             new Vector3(Time.deltaTime * _paralaxSpeed, 0f, 0f);
+        _bottomTransform.localPosition +=
+            new Vector3(Time.deltaTime * _paralaxSpeed, 0f, 0f);
+        _boxCollider2d.offset += new Vector2(Time.deltaTime * _paralaxSpeed, 0f);
 
-        if (Mathf.Abs(_component.localPosition.x) > _startX + _componentSize)
+        if (Mathf.Abs(_topTransform.localPosition.x) > _startTransformX + _disttance)
         {
-            _component.localPosition = new Vector3(_startX, 0f, 0f);
+            _topTransform.localPosition = new Vector3(_startTransformX, _topTransform.localPosition.y, 0f);
+            _bottomTransform.localPosition = new Vector3(_startTransformX, _bottomTransform.localPosition.y, 0f);
+
+            _boxCollider2d.offset = new Vector2(_startOffsetColliderX, _boxCollider2d.offset.y);
+
         }
     }
 }
