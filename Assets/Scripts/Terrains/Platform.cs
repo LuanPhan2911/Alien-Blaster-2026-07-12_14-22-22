@@ -43,10 +43,10 @@ public class Platform : MonoBehaviour
         }
 
         _boxCollider2D.size = new Vector2(_grassMidSize + 2, _boxCollider2D.size.y);
+    }
 
-
-
-
-
+    public Vector2 GetSize()
+    {
+        return _boxCollider2D.size;
     }
 }

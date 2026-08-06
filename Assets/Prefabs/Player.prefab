@@ -16,14 +16,19 @@ GameObject:
   - component: {fileID: 8339975547560672444}
   - component: {fileID: 1621183844149338643}
   - component: {fileID: 5550621519107340329}
+  - component: {fileID: 6360542579684432280}
   - component: {fileID: 7612940486204956263}
+  - component: {fileID: 5388325258653650463}
   - component: {fileID: 8458118377244900885}
+  - component: {fileID: 4727351122545768446}
+  - component: {fileID: 5781728952320712695}
   - component: {fileID: 8093926656468118735}
   - component: {fileID: 7683409679618410710}
   - component: {fileID: 6169132776630504632}
   - component: {fileID: 4854416409012698757}
   - component: {fileID: 6848340107228430087}
   - component: {fileID: 1826876720301496464}
+  - component: {fileID: 8088644575292126995}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -314,10 +319,23 @@ MonoBehaviour:
   IsOnSnow: 0
   HorizontalVelocity: 0
   VerticalVelocity: 0
+  IsStunned: 0
   _groundLayerMask:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 832
   _hurtSound: {fileID: 8300000, guid: 0d1a58769e7e82f44a3d3a95ff901221, type: 3}
+--- !u!114 &6360542579684432280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577240107966679132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fc9ab9b35bae014bad68858b80e2a20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSprite
 --- !u!114 &7612940486204956263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,6 +348,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd389ea37417544e9817298543153c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
+--- !u!114 &5388325258653650463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577240107966679132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c42f1585f3bf3724c9509b53c532ff13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerOneShotSound
+  _audioSource: {fileID: 8339975547560672444}
 --- !u!114 &8458118377244900885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +391,40 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 6746278841788770779}
+--- !u!114 &4727351122545768446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577240107966679132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d599fc8a77e0454b984af1767e700c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerJumping
+  _jumpVelocity: 5
+  _jumpDuration: 0.5
+  _feetSize: 1
+  _jumpSound: {fileID: 8300000, guid: 5028d8b23801dcd4fb28e768e74b94dc, type: 3}
+  IsGrounded: 0
+  IsOnSnow: 0
+--- !u!114 &5781728952320712695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577240107966679132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34e68386912c68d44b25d013a1d3e2ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMoving
+  _horizontalMaxSpeed: 4
+  _groundAcceleration: 5
+  _snowAcceleration: 1
+  _horizontalSwimmingSpeed: 2
 --- !u!114 &8093926656468118735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,10 +465,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4b0d0d7cbcd5e247a09ec8c86903cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPassThroughPlatform
-  _colider2d: {fileID: 6989032475678194400}
-  _delayBeforePassThrough: 0.1
-  _passThroughDuration: 0.5
-  _passThroughAnimationDuration: 0.25
+  _ignoreCollisonDuration: 0.5
+  _platformLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &4854416409012698757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,12 +476,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 577240107966679132}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c03df7cd7d82a948ac6a089ab64d6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFalling
-  IsFalling: 0
   _fallingVelocityThreshhold: 10
   _fallingStunedDuration: 0.5
   _fallingColliderSizeY: 1
@@ -436,7 +500,7 @@ MonoBehaviour:
   _waterLayerMask:
     serializedVersion: 2
     m_Bits: 16
-  IsOnWater: 0
+  IsSwimming: 0
 --- !u!114 &1826876720301496464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,6 +516,21 @@ MonoBehaviour:
   _loopAudioSource: {fileID: 9085927516210164670}
   _walkingSound: {fileID: 8300000, guid: 4a70c47d977187a4089443dffc6839e2, type: 3}
   _swimmingSound: {fileID: 8300000, guid: 549595360b0277e418938f8209c09789, type: 3}
+--- !u!114 &8088644575292126995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577240107966679132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe5a2230f5bd5414b9156077be58845b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerClimbing
+  _climbingSpeed: 1
+  IsClimbing: 0
+  CanClimb: 0
 --- !u!1 &3321088912014049881
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,7 +547,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5760776446156895761
 Transform:
   m_ObjectHideFlags: 0
