@@ -13,7 +13,7 @@ public class MovingPlatform : MonoBehaviour
 
 
         Gizmos.color = Color.red;
-        if (gameObject.TryGetComponent(out Platform platform))
+        if (gameObject.TryGetComponent(out BuildPlatform platform))
         {
             Gizmos.DrawWireCube(StartPosition, platform.GetSize());
             Gizmos.DrawWireCube(EndPosition, platform.GetSize());
@@ -54,7 +54,7 @@ public class MovingPlatform : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.collider.TryGetComponent<Player>(out Player player))
+        if (collision.collider.TryGetComponent(out Player player))
         {
             player.transform.SetParent(null);
         }

@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2364798838311620353}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalPosition: {x: 3.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -117,7 +117,7 @@ Transform:
   m_GameObject: {fileID: 3713950063118040625}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: 0}
+  m_LocalPosition: {x: -3.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -193,8 +193,8 @@ GameObject:
   - component: {fileID: 5467357288802517818}
   - component: {fileID: 2083530851102522038}
   - component: {fileID: 1639335067965811006}
-  - component: {fileID: 4959615877988779963}
   - component: {fileID: 7890180899741258864}
+  - component: {fileID: 4740449575249051398}
   m_Layer: 8
   m_Name: MovingPlatform
   m_TagString: Grass
@@ -273,7 +273,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 3, y: 1}
+  m_Size: {x: 6, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -317,29 +317,13 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 3, y: 1}
+    newSize: {x: 6, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 2
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 5, y: 1}
+  m_Size: {x: 8, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4959615877988779963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6794847566769409403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62a3f8e0e26e9d1428e837d40acf0d1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GrassPlatform
-  _grassLeft: {fileID: 6143559334626774758}
-  _grassRight: {fileID: 5806673434495883937}
-  _boxCollider2D: {fileID: 1639335067965811006}
-  _grassMidSize: 3
 --- !u!114 &7890180899741258864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,5 +337,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingPlatform
   _speed: 0.25
-  StartPosition: {x: 0, y: 0, z: 0}
+  StartPosition: {x: 4.4907427, y: 0.23864308, z: 0}
   EndPosition: {x: 15.42, y: 5.14, z: 0}
+--- !u!114 &4740449575249051398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6794847566769409403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce58f7bcbf3906b4fb21a264ad842298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuildPlatform
+  _grassLeft: {fileID: 6143559334626774758}
+  _grassRight: {fileID: 5806673434495883937}
+  _boxCollider2D: {fileID: 1639335067965811006}
+  _grassMidSize: 6
