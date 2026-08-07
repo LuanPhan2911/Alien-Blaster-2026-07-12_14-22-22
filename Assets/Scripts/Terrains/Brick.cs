@@ -18,10 +18,10 @@ public class Brick : MonoBehaviour
 
             if (dotVal > 0.5f)
             {
-                Destroy(gameObject);
+                player.GetComponent<PlayerJumping>().StopJump();
                 ParticleSystem particle = Instantiate(_brickBreakParticle, transform.position, Quaternion.identity);
                 player.PlayerOneShotSound.Play(_brickBreakSound);
-
+                Destroy(gameObject);
             }
 
 

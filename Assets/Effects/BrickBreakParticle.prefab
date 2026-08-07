@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 189778003904201377}
   - component: {fileID: 7186652667832177355}
   - component: {fileID: 5557971490939900688}
+  - component: {fileID: 854166545769974851}
   m_Layer: 0
   m_Name: BrickBreakParticle
   m_TagString: Untagged
@@ -41,7 +42,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 190763385905351019}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -4894,3 +4895,16 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &854166545769974851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190763385905351019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3af41bc7f03c3844eb7566d523ed7be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BrickBreakParticle
+  _particleSystem: {fileID: 7186652667832177355}

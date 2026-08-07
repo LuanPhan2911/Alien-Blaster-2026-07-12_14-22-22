@@ -81,4 +81,9 @@ public class PlayerJumping : MonoBehaviour
         _player.PlayerAnimation.SetJumping(!IsGrounded);
     }
 
+    public void StopJump()
+    {
+        _jumpEndTime = Time.time;
+    }
+
 }
