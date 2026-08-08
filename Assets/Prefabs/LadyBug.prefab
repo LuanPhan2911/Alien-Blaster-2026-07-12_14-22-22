@@ -81,8 +81,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1321839643
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -179998687317359159, guid: 0a64821fd07fc8a46b644f5d02c6f246, type: 3}
@@ -195,3 +195,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Moving
   _speed: 1
   _direction: {x: -1, y: 0}
+  _groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _groundCheckDistance: 0.5
+  _wallCheckDistance: 0.25
+  offsetX: 0.5

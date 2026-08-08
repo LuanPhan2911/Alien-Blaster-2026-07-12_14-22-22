@@ -84,8 +84,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1321839643
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 5158404753353345565, guid: 7b42890a9b0059344a2dd71951148ccc, type: 3}
@@ -203,15 +203,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Frog
   _jumpForce: {x: -100, y: 150}
+  _jumpForceHasTarget: {x: 0, y: 0}
   _jumpSprite: {fileID: 7767502141250053, guid: 314af25ce5fb20444aeea0c8e426da1f, type: 3}
   _groundLayerMask:
     serializedVersion: 2
     m_Bits: 128
   _jumpInterval: 1
+  _jumIntervalHasTarget: 1.5
   _actionRadius: 7
   _offset: 1
   detectionRadius: 4
-  _audioSource: {fileID: 0}
+  _facingDirection: -1
 --- !u!114 &4991712921389980262
 MonoBehaviour:
   m_ObjectHideFlags: 0

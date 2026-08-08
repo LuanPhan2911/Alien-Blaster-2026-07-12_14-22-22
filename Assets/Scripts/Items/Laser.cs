@@ -10,6 +10,7 @@ public class Laser : MonoBehaviour
     [SerializeField] private Vector2 _direction;
     [SerializeField] private float _distance;
 
+    [SerializeField] private LaserBurst _burst;
 
     private void Awake()
     {
@@ -28,7 +29,11 @@ public class Laser : MonoBehaviour
 
     private void Update()
     {
-        if (!_isOn) return;
+        if (!_isOn)
+        {
+            _burst.Hide();
+            return;
+        }
 
         Vector2 startPoint = (Vector2)transform.position + _startOffset;
         Vector2 endPoint = startPoint + _direction * _distance;
@@ -37,10 +42,13 @@ public class Laser : MonoBehaviour
         if (hit.collider != null)
         {
             endPoint = hit.point;
+            _burst.Show();
+            _burst.SetLocalPosition(transform.InverseTransformPoint(endPoint));
 
             if (hit.collider.TryGetComponent(out ITakeLaserDamagable takeDamage))
             {
-                takeDamage.TakeLaserDamage();
+                //takeDamage.TakeLaserDamage();
+                //_burst.Hide();
             }
         }
 
