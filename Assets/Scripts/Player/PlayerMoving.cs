@@ -43,13 +43,13 @@ public class PlayerMoving : MonoBehaviour
         // Mathf.Lerp: Fast at first, then slows down as it approaches the target.
         // Mathf.SmoothDamp: Slow at first, then fast, then slow again as it approaches the target.
 
-        if (_playerJumping.IsGrounded && Mathf.Abs(horizontalInput) > 0.5f)
-        {
-            AudioManager.Instance.Play(_walkingSound);
-        }
-        else
-        {
-            AudioManager.Instance.Stop(_walkingSound);
-        }
+        //if (_playerJumping.IsGrounded && Mathf.Abs(horizontalInput) > 0.5f)
+        //{
+        //    AudioManager.Instance.Play(_walkingSound);
+        //}
+        //else
+        //{
+        //    AudioManager.Instance.Stop(_walkingSound);
+        //}
     }
 }

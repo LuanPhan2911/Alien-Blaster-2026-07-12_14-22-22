@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Brick : MonoBehaviour
+public class Brick : MonoBehaviour, ITakeLaserDamagable
 {
 
     [SerializeField] private ParticleSystem _brickBreakParticle;
@@ -37,7 +37,7 @@ public class Brick : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void TakeDamage()
+    public void TakeLaserDamage()
     {
         _takenDamageTime += Time.deltaTime;
 

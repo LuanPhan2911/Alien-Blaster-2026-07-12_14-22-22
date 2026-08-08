@@ -38,9 +38,9 @@ public class Laser : MonoBehaviour
         {
             endPoint = hit.point;
 
-            if (hit.collider.TryGetComponent(out Brick brick))
+            if (hit.collider.TryGetComponent(out ITakeLaserDamagable takeDamage))
             {
-                brick.TakeDamage();
+                takeDamage.TakeLaserDamage();
             }
         }
 
