@@ -43,7 +43,7 @@ public class LaserSwitch : MonoBehaviour
             {
                 _currentSprite.sprite = _onSwitchSprite;
                 OnSwitchOn.Invoke();
-                player.PlayerOneShotSound.Play(_switchSound);
+                AudioManager.Instance.PlayOneShot(_switchSound);
                 _isOn = true;
 
             }
@@ -51,7 +51,7 @@ public class LaserSwitch : MonoBehaviour
             {
                 _currentSprite.sprite = _offSwitchSprite;
                 OnSwitchOff.Invoke();
-                player.PlayerOneShotSound.Play(_switchSound);
+                AudioManager.Instance.PlayOneShot(_switchSound);
                 _isOn = false;
 
             }

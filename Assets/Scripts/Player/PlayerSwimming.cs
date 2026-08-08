@@ -4,14 +4,16 @@ public class PlayerSwimming : MonoBehaviour
 {
 
     [SerializeField] private LayerMask _waterLayerMask;
+    [SerializeField] private AudioClip _swimmingSound;
 
     private PlayerAnimation _playerAnimation;
-    private PlayerLoopSound _playerLoopSound;
+
+
 
     private void Awake()
     {
         _playerAnimation = GetComponent<PlayerAnimation>();
-        _playerLoopSound = GetComponent<PlayerLoopSound>();
+
     }
 
     public bool IsSwimming = false;
@@ -22,7 +24,9 @@ public class PlayerSwimming : MonoBehaviour
         {
             IsSwimming = true;
             _playerAnimation.SetSwimming(true);
-            _playerLoopSound.PlaySwimmingSound();
+
+            AudioManager.Instance.Play(_swimmingSound);
+
 
 
         }
@@ -35,7 +39,7 @@ public class PlayerSwimming : MonoBehaviour
             IsSwimming = false;
 
             _playerAnimation.SetSwimming(false);
-            _playerLoopSound.Stop();
+            AudioManager.Instance.Stop(_swimmingSound);
         }
     }
 }

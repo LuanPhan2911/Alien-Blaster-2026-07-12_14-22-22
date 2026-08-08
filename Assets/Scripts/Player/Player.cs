@@ -19,8 +19,7 @@ public partial class Player : MonoBehaviour
     public SpriteRenderer SpriteRenderer { get; private set; }
     public Rigidbody2D Rb { get; private set; }
     public PlayerInput PlayerInput { get; private set; }
-    public PlayerOneShotSound PlayerOneShotSound { get; private set; }
-    public PlayerLoopSound PlayerLoopSound { get; private set; }
+
     public PlayerSprite PlayerSprite { get; private set; }
 
     [SerializeField] private LayerMask _groundLayerMask;
@@ -42,8 +41,7 @@ public partial class Player : MonoBehaviour
         SpriteRenderer = GetComponent<SpriteRenderer>();
         PlayerAnimation = GetComponent<PlayerAnimation>();
         PlayerInput = GetComponent<PlayerInput>();
-        PlayerOneShotSound = GetComponent<PlayerOneShotSound>();
-        PlayerLoopSound = GetComponent<PlayerLoopSound>();
+
         PlayerSprite = GetComponent<PlayerSprite>();
 
         _knockbackReceiver = GetComponent<KnockbackReceiver>();
@@ -91,7 +89,7 @@ public partial class Player : MonoBehaviour
     private void FixedUpdate()
     {
 
-        if (IsStunned) return;
+
         if (_knockbackReceiver.IsKnockbacked) return;
 
 
@@ -109,7 +107,7 @@ public partial class Player : MonoBehaviour
     public void TakeDamage()
     {
         Health--;
-        PlayerOneShotSound.Play(_hurtSound);
+        AudioManager.Instance.PlayOneShot(_hurtSound);
         OnHealthChanged?.Invoke(this, Health);
         _damageFlash.Flash();
         if (Health <= 0)

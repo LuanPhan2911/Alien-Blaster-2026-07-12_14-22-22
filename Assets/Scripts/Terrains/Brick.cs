@@ -22,7 +22,7 @@ public class Brick : MonoBehaviour
             if (dotVal > 0.5f)
             {
                 player.GetComponent<PlayerJumping>().StopJump();
-                player.PlayerOneShotSound.Play(_brickBreakSound);
+
                 DestroySelf();
             }
 
@@ -33,7 +33,7 @@ public class Brick : MonoBehaviour
     private void DestroySelf()
     {
         ParticleSystem particle = Instantiate(_brickBreakParticle, transform.position, Quaternion.identity);
-
+        AudioManager.Instance.PlayOneShot(_brickBreakSound);
         Destroy(gameObject);
     }
 

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2459734146023367861}
   - component: {fileID: 228330158549022232}
   - component: {fileID: 8115079803284141631}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Brick
-  m_TagString: Untagged
+  m_TagString: Grass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,3 +153,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Brick
   _brickBreakParticle: {fileID: 7186652667832177355, guid: 92c15edae21125845bcd1675836ebb95, type: 3}
   _brickBreakSound: {fileID: 8300000, guid: d96026c013ec0384da610b3a0292bf09, type: 3}
+  _destructionTime: 1

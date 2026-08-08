@@ -47,7 +47,8 @@ public class PlayerJumping : MonoBehaviour
         {
             _jumpEndTime = Time.time + _jumpDuration;
             _jumpRemain--;
-            _player.PlayerOneShotSound.Play(_jumpSound);
+            Debug.Log("Play jump sound");
+            AudioManager.Instance.PlayOneShot(_jumpSound);
 
         }
         if (_player.PlayerInput.actions["Jump"].IsPressed() && Time.time < _jumpEndTime)

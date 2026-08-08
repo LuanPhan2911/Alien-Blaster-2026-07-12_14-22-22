@@ -8,6 +8,8 @@ public class PlayerMoving : MonoBehaviour
 
     [SerializeField] private float _horizontalSwimmingSpeed = 2f;
 
+    [SerializeField] private AudioClip _walkingSound;
+
     private Player _player;
     private PlayerSwimming _playerSwimming;
     private PlayerJumping _playerJumping;
@@ -41,16 +43,13 @@ public class PlayerMoving : MonoBehaviour
         // Mathf.Lerp: Fast at first, then slows down as it approaches the target.
         // Mathf.SmoothDamp: Slow at first, then fast, then slow again as it approaches the target.
 
-        if (_playerJumping.IsGrounded)
+        if (_playerJumping.IsGrounded && Mathf.Abs(horizontalInput) > 0.5f)
         {
-            if (Mathf.Abs(horizontalInput) > 0.1f)
-            {
-                _player.PlayerLoopSound.PlayWalkingSound();
-            }
-            else
-            {
-                _player.PlayerLoopSound.Stop();
-            }
+            AudioManager.Instance.Play(_walkingSound);
+        }
+        else
+        {
+            AudioManager.Instance.Stop(_walkingSound);
         }
     }
 }

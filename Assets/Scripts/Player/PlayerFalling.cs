@@ -29,7 +29,7 @@ public class PlayerFalling : MonoBehaviour
                 StartCoroutine(FallingStunnedCorountine());
 
                 // trigger falling sound
-                _player.PlayerOneShotSound.Play(_fallingSound);
+                AudioManager.Instance.PlayOneShot(_fallingSound);
 
 
             }

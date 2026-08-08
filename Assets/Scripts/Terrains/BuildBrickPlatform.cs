@@ -34,7 +34,7 @@ public class BuildBrickPlatform : MonoBehaviour, IExcuteEditMode
         {
             // instantiate new brick
             GameObject brick = Instantiate(_brickPrefab, transform);
-            brick.transform.position = new Vector3(_brickList[i - 1].transform.position.x + 1, 0f, 0f);
+            brick.transform.localPosition = new Vector3(_brickList[i - 1].transform.localPosition.x + 1, 0f, 0f);
             _brickList.Add(brick);
         }
 
