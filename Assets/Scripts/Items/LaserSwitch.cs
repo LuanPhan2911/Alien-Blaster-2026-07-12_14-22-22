@@ -8,6 +8,8 @@ public class LaserSwitch : MonoBehaviour
     [SerializeField] private Sprite _offSwitchSprite;
     [SerializeField] private Sprite _onSwitchSprite;
 
+    [SerializeField] private AudioClip _switchSound;
+
     private SpriteRenderer _currentSprite;
 
 
@@ -15,6 +17,8 @@ public class LaserSwitch : MonoBehaviour
 
     public UnityEvent OnSwitchOn;
     public UnityEvent OnSwitchOff;
+
+    private bool _isOn = false;
     private void Awake()
     {
         _currentSprite = GetComponent<SpriteRenderer>();
@@ -24,6 +28,7 @@ public class LaserSwitch : MonoBehaviour
     private void Start()
     {
         OnSwitchOff.Invoke();
+        _isOn = false;
     }
 
 
@@ -34,16 +39,20 @@ public class LaserSwitch : MonoBehaviour
         {
 
 
-            if (player.HorizontalVelocity > 0)
+            if (player.HorizontalVelocity > 0 && !_isOn)
             {
                 _currentSprite.sprite = _onSwitchSprite;
                 OnSwitchOn.Invoke();
+                player.PlayerOneShotSound.Play(_switchSound);
+                _isOn = true;
 
             }
-            else if (player.HorizontalVelocity < 0)
+            else if (player.HorizontalVelocity < 0 && _isOn)
             {
                 _currentSprite.sprite = _offSwitchSprite;
                 OnSwitchOff.Invoke();
+                player.PlayerOneShotSound.Play(_switchSound);
+                _isOn = false;
 
             }
 

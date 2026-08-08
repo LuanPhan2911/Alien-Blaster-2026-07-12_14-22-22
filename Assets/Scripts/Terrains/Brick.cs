@@ -6,6 +6,9 @@ public class Brick : MonoBehaviour
     [SerializeField] private ParticleSystem _brickBreakParticle;
     [SerializeField] private AudioClip _brickBreakSound;
 
+
+    [SerializeField] private float _destructionTime = 1f;
+    private float _takenDamageTime = 0f;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.TryGetComponent(out Player player))
@@ -19,13 +22,28 @@ public class Brick : MonoBehaviour
             if (dotVal > 0.5f)
             {
                 player.GetComponent<PlayerJumping>().StopJump();
-                ParticleSystem particle = Instantiate(_brickBreakParticle, transform.position, Quaternion.identity);
                 player.PlayerOneShotSound.Play(_brickBreakSound);
-                Destroy(gameObject);
+                DestroySelf();
             }
 
 
 
+        }
+    }
+    private void DestroySelf()
+    {
+        ParticleSystem particle = Instantiate(_brickBreakParticle, transform.position, Quaternion.identity);
+
+        Destroy(gameObject);
+    }
+
+    public void TakeDamage()
+    {
+        _takenDamageTime += Time.deltaTime;
+
+        if (_takenDamageTime > _destructionTime)
+        {
+            DestroySelf();
         }
     }
 }
