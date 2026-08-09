@@ -24,35 +24,40 @@ public class BuildBrickPlatform : MonoBehaviour, IExcuteEditMode
     {
         if (_isDirty)
         {
+
             UpdateLayout();
             _isDirty = false;
         }
     }
     public void UpdateLayout()
     {
+        ClearBrick();
+        CreatePlatform();
 
-        // destroy all brick
-        foreach (Brick brick in GetComponentsInChildren<Brick>())
-        {
-            DestroyImmediate(brick.gameObject);
-        }
+    }
+
+    private void ClearBrick()
+    {
         _brickList.Clear();
-        if (_brickList.Count == 0)
+        for (int i = transform.childCount - 1; i >= 0; i--)
         {
-            GameObject brick = Instantiate(_brickPrefab, transform);
+            GameObject child = transform.GetChild(i).gameObject;
+            if (child.GetComponent<Brick>() != null)
+            {
+                DestroyImmediate(child); // Required for Editor mode
+            }
+        }
+    }
+
+    private void CreatePlatform()
+    {
+        Vector3 spawnPos = transform.position;
+
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 brickPosition = spawnPos + new Vector3(i, 0, 0);
+            GameObject brick = Instantiate(_brickPrefab, brickPosition, Quaternion.identity, transform);
             _brickList.Add(brick);
         }
-        for (int i = 1; i < count; i++)
-        {
-            GameObject brick = Instantiate(_brickPrefab, transform);
-            brick.transform.position = new Vector3(_brickList[i - 1].transform.position.x + 1,
-                brick.transform.position.y,
-                brick.transform.position.z);
-
-            _brickList.Add(brick);
-        }
-
-
-
     }
 }

@@ -10,6 +10,8 @@ public class PlayerSprite : MonoBehaviour
     private PlayerAnimation _playerAnimation;
     private SpriteRenderer _playerSpriteRenderer;
 
+    [SerializeField] private float _crochingColliderSizeY = 1f;
+
 
     public float DefaultColliderSizeX { get; private set; }
     public float DefaultColliderSizeY { get; private set; }
@@ -77,6 +79,11 @@ public class PlayerSprite : MonoBehaviour
 
         Physics2D.IgnoreCollision(_playerCollider, otherCollider, false);
 
+    }
+
+    public void SetCrochingCollider()
+    {
+        SetColliderSizeY(_crochingColliderSizeY);
     }
 
 }

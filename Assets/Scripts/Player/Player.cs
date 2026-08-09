@@ -13,7 +13,7 @@ public partial class Player : MonoBehaviour
     public float HorizontalVelocity;
     public float VerticalVelocity;
 
-    public bool IsStunned = false;
+
 
     public PlayerAnimation PlayerAnimation { get; private set; }
     public SpriteRenderer SpriteRenderer { get; private set; }
@@ -30,6 +30,7 @@ public partial class Player : MonoBehaviour
     private PlayerClimbing _playerClimbing;
     private PlayerData _playerData;
     private PlayerSwimming _playerSwimming;
+    private PlayerCroching _playerCroching;
     public int Coin { get => _playerData.Coin; private set => _playerData.Coin = value; }
     public int Health { get => _playerData.Health; private set => _playerData.Health = value; }
 
@@ -48,6 +49,8 @@ public partial class Player : MonoBehaviour
         _damageFlash = GetComponent<DamageFlash>();
         _playerClimbing = GetComponent<PlayerClimbing>();
         _playerSwimming = GetComponent<PlayerSwimming>();
+
+        _playerCroching = GetComponent<PlayerCroching>();
     }
     private void Start()
     {
@@ -63,7 +66,7 @@ public partial class Player : MonoBehaviour
 
     private void Update()
     {
-        if (IsStunned)
+        if (_playerCroching.IsCroching)
         {
             HorizontalVelocity = 0;
             VerticalVelocity = 0;

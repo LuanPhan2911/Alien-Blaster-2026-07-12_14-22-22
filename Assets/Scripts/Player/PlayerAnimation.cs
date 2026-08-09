@@ -9,11 +9,8 @@ public class PlayerAnimation : MonoBehaviour
 
     const string HORIZONTAL = "Horizontal";
     const string IS_JUMPING = "IsJumping";
-
     const string IS_CLIMBING = "IsClimbing";
-
-    const string IS_FALLING = "IsFalling";
-
+    const string IS_CROCHING = "IsCroching";
     const string IS_SWIMMING = "IsSwimming";
 
 
@@ -39,9 +36,9 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool(IS_CLIMBING, isClimbing);
     }
 
-    public void SetFalling(bool isFalling)
+    public void SetCroching(bool isCroching)
     {
-        animator.SetBool(IS_FALLING, isFalling);
+        animator.SetBool(IS_CROCHING, isCroching);
     }
     public void SetSwimming(bool isSwimming)
     {

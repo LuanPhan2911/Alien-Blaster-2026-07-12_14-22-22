@@ -14,6 +14,7 @@ public class PlayerMoving : MonoBehaviour
     private PlayerSwimming _playerSwimming;
     private PlayerJumping _playerJumping;
     private PlayerClimbing _playerClimbing;
+    private PlayerCroching _playerCroching;
 
     private void Awake()
     {
@@ -21,12 +22,14 @@ public class PlayerMoving : MonoBehaviour
         _playerSwimming = GetComponent<PlayerSwimming>();
         _playerJumping = GetComponent<PlayerJumping>();
         _playerClimbing = GetComponent<PlayerClimbing>();
+        _playerCroching = GetComponent<PlayerCroching>();
     }
 
     private void Update()
     {
-        if (_player.IsStunned) return;
+
         if (_playerClimbing.IsClimbing) return;
+        if (_playerCroching.IsCroching) return;
 
         float horizontalInput = _player.PlayerInput.actions["Move"].ReadValue<Vector2>().x;
 

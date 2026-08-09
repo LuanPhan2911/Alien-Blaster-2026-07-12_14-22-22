@@ -10,6 +10,7 @@ public class PlayerJumping : MonoBehaviour
     private Player _player;
     private PlayerClimbing _playerClimbing;
     private PlayerSwimming _playerSwimming;
+    private PlayerCroching _playerCroching;
     public bool IsGrounded = false;
     public bool IsOnSnow = false;
     private int _jumpRemain = 2;
@@ -20,26 +21,21 @@ public class PlayerJumping : MonoBehaviour
         _player = GetComponent<Player>();
         _playerClimbing = GetComponent<PlayerClimbing>();
         _playerSwimming = GetComponent<PlayerSwimming>();
+        _playerCroching = GetComponent<PlayerCroching>();
 
     }
 
     private void Update()
     {
         CheckGrouding();
-        if (_player.IsStunned) return;
         if (_playerClimbing.IsClimbing)
         {
             _jumpRemain = 1;
             return;
         }
-        if (_playerSwimming.IsSwimming)
-        {
-            return;
-        }
 
-
-
-
+        if (_playerCroching.IsCroching) return;
+        if (_playerSwimming.IsSwimming) return;
         _player.VerticalVelocity = _player.Rb.linearVelocityY;
 
 
