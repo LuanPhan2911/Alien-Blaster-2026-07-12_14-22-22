@@ -47,9 +47,17 @@ public class Laser : MonoBehaviour
 
             if (hit.collider.TryGetComponent(out ITakeLaserDamagable takeDamage))
             {
-                //takeDamage.TakeLaserDamage();
-                //_burst.Hide();
+                takeDamage.TakeLaserDamage();
+
             }
+            else
+            {
+                _burst.Hide();
+            }
+        }
+        else
+        {
+            _burst.Hide();
         }
 
 

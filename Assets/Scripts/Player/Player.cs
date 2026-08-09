@@ -128,6 +128,10 @@ public partial class Player : MonoBehaviour
         return _groundLayerMask;
     }
 
+    public void Bounce(Vector2 normal, float force)
+    {
+        Rb.linearVelocity = Vector2.zero;
 
-
+        Rb.AddForce(normal * force, ForceMode2D.Impulse);
+    }
 }

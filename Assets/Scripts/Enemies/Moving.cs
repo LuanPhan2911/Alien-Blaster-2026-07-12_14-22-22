@@ -6,6 +6,7 @@ public class Moving : MonoBehaviour
     [SerializeField] private float _speed = 1f;
     [SerializeField] private Vector2 _direction = Vector2.left;
     [SerializeField] private LayerMask _groundMask;
+    [SerializeField] private LayerMask _wallMask;
     [SerializeField] private float _groundCheckDistance = 0.5f;
     [SerializeField] private float _wallCheckDistance = 0.25f;
     [SerializeField] private float offsetX = 0.5f;
@@ -62,7 +63,7 @@ public class Moving : MonoBehaviour
     {
         Vector2 offset = offsetX * _direction;
         Vector2 origin = (Vector2)transform.position + offset;
-        RaycastHit2D hit = Physics2D.Raycast(origin, _direction, _wallCheckDistance);
+        RaycastHit2D hit = Physics2D.Raycast(origin, _direction, _wallCheckDistance, _wallMask);
         if (hit.collider)
         {
             FlipDirection();

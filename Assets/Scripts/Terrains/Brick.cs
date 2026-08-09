@@ -7,8 +7,15 @@ public class Brick : MonoBehaviour, ITakeLaserDamagable
     [SerializeField] private AudioClip _brickBreakSound;
 
 
+
     [SerializeField] private float _destructionTime = 1f;
     private float _takenDamageTime = 0f;
+    private SpriteRenderer _spriteRenderer;
+
+    private void Awake()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.TryGetComponent(out Player player))
@@ -40,6 +47,10 @@ public class Brick : MonoBehaviour, ITakeLaserDamagable
     public void TakeLaserDamage()
     {
         _takenDamageTime += Time.deltaTime;
+
+        float t = _takenDamageTime / _destructionTime;
+        float red = Mathf.Lerp(0, 1, t);
+        _spriteRenderer.color = new Color(1, 1 - red, 1 - red);
 
         if (_takenDamageTime > _destructionTime)
         {

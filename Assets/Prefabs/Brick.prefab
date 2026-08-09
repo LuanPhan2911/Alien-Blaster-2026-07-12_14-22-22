@@ -153,4 +153,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Brick
   _brickBreakParticle: {fileID: 7186652667832177355, guid: 92c15edae21125845bcd1675836ebb95, type: 3}
   _brickBreakSound: {fileID: 8300000, guid: d96026c013ec0384da610b3a0292bf09, type: 3}
-  _destructionTime: 1
+  _destructionTime: 2

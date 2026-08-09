@@ -6,9 +6,6 @@ public class Spring : MonoBehaviour
 
 
     [SerializeField] private Sprite _sprungSprite;
-
-    [SerializeField] private BoxCollider2D _collider2d;
-
     [SerializeField] private float _duration = 0.5f;
 
     private SpriteRenderer _spriteRenderer;
@@ -26,21 +23,9 @@ public class Spring : MonoBehaviour
     {
         if (collision.collider.TryGetComponent(out Player player))
         {
-
-
-            float playerFeetY = collision.collider.bounds.min.y;
-
-            float pringTopY = _collider2d.bounds.max.y;
-
-            float threshold = 0.1f;
-
-            if (playerFeetY >= pringTopY - threshold)
-            {
-                _spriteRenderer.sprite = _sprungSprite;
-                _audioSource.Play();
-
-                StartCoroutine(ReturnToSpringCoroutine());
-            }
+            _spriteRenderer.sprite = _sprungSprite;
+            _audioSource.Play();
+            StartCoroutine(ReturnToSpringCoroutine());
         }
     }
 
