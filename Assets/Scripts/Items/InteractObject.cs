@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,8 @@ public class InteractObject : MonoBehaviour
     public bool CanInteract;
 
     private PlayerInput _playerInput;
+    public event EventHandler InteractSuccessAction;
+    public event EventHandler InteractFailAction;
 
     private void Update()
     {
@@ -15,12 +18,12 @@ public class InteractObject : MonoBehaviour
         {
             if (InventoryManager.Instance.HasItem(_needItemData))
             {
-                Debug.Log("Unlock");
-                Destroy(gameObject);
+                InteractSuccessAction?.Invoke(this, EventArgs.Empty);
             }
             else
             {
                 Debug.Log("Need required item");
+                InteractFailAction?.Invoke(this, EventArgs.Empty);
             }
         }
     }

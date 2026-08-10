@@ -13,6 +13,14 @@ public class GameManager : MonoBehaviour
 
     public List<string> GameNameList = new List<string>();
 
+    public bool IsPlayCinemachine = false;
+
+
+    public void SetPlayCinemachine(bool playCinemachine)
+    {
+        IsPlayCinemachine = playCinemachine;
+    }
+
 
 
 

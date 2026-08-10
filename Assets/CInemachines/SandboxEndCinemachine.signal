@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96d36c268fef4984d8b3bca1662c8b76, type: 3}
-  m_Name: YellowKey
-  m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  ItemName: Yellow Key
-  Sprite: {fileID: -8129527155744968792, guid: 3ba095bba58c01d47adae906a0da0449, type: 3}
+  m_Script: {fileID: 11500000, guid: d6fa2d92fc1b3f34da284357edf89c3b, type: 3}
+  m_Name: SandboxEndCinemachine
+  m_EditorClassIdentifier: Unity.Timeline::UnityEngine.Timeline.SignalAsset
