@@ -2,7 +2,7 @@ using UnityEngine;
 
 
 [ExecuteInEditMode]
-public class BuildWater : MonoBehaviour, IExcuteEditMode
+public class BuildWater : MonoBehaviour, IExecuteEditMode
 {
 
 

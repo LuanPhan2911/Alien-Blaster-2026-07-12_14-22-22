@@ -2,7 +2,7 @@ using UnityEngine;
 
 
 [ExecuteInEditMode]
-public class BuildLadder : MonoBehaviour, IExcuteEditMode
+public class BuildLadder : MonoBehaviour, IExecuteEditMode
 {
 
     private bool _isDirty = false;

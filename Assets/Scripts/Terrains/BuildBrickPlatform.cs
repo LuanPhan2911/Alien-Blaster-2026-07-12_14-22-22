@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class BuildBrickPlatform : MonoBehaviour, IExcuteEditMode
+public class BuildBrickPlatform : MonoBehaviour, IExecuteEditMode
 {
 
 
