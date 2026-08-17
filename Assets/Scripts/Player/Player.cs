@@ -9,9 +9,14 @@ public partial class Player : MonoBehaviour
 
     public const string PLAYER_TAG = "Player";
     public const string PLAYER_MASK = "Player";
-    public bool IsOnSnow;
+
     public float HorizontalVelocity;
     public float VerticalVelocity;
+
+    public bool IsGrounded;
+    public bool IsSwimming;
+    public bool IsFall;
+    public bool IsClimbing;
 
 
 
@@ -27,10 +32,8 @@ public partial class Player : MonoBehaviour
 
     private KnockbackReceiver _knockbackReceiver;
     private DamageFlash _damageFlash;
-    private PlayerClimbing _playerClimbing;
     private PlayerData _playerData;
-    private PlayerSwimming _playerSwimming;
-    private PlayerCroching _playerCroching;
+
     public int Coin { get => _playerData.Coin; private set => _playerData.Coin = value; }
     public int Health { get => _playerData.Health; private set => _playerData.Health = value; }
 
@@ -47,10 +50,7 @@ public partial class Player : MonoBehaviour
 
         _knockbackReceiver = GetComponent<KnockbackReceiver>();
         _damageFlash = GetComponent<DamageFlash>();
-        _playerClimbing = GetComponent<PlayerClimbing>();
-        _playerSwimming = GetComponent<PlayerSwimming>();
 
-        _playerCroching = GetComponent<PlayerCroching>();
     }
     private void Start()
     {
@@ -66,12 +66,12 @@ public partial class Player : MonoBehaviour
 
     private void Update()
     {
-        if (_playerCroching.IsCroching)
+        if (IsFall)
         {
             HorizontalVelocity = 0;
             VerticalVelocity = 0;
         }
-        if (_playerClimbing.IsClimbing)
+        if (IsClimbing)
         {
             HorizontalVelocity = 0;
             Rb.gravityScale = 0f;
@@ -80,9 +80,11 @@ public partial class Player : MonoBehaviour
         {
             Rb.gravityScale = 1;
         }
-        if (_playerSwimming.IsSwimming)
+
+        if (IsSwimming)
         {
             VerticalVelocity = Rb.linearVelocityY;
+
         }
 
 

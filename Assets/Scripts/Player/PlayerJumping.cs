@@ -8,10 +8,8 @@ public class PlayerJumping : MonoBehaviour
     [SerializeField] private AudioClip _jumpSound;
 
     private Player _player;
-    private PlayerClimbing _playerClimbing;
-    private PlayerSwimming _playerSwimming;
-    private PlayerCroching _playerCroching;
-    public bool IsGrounded = false;
+
+
     public bool IsOnSnow = false;
     private int _jumpRemain = 2;
     private float _jumpEndTime;
@@ -19,23 +17,22 @@ public class PlayerJumping : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<Player>();
-        _playerClimbing = GetComponent<PlayerClimbing>();
-        _playerSwimming = GetComponent<PlayerSwimming>();
-        _playerCroching = GetComponent<PlayerCroching>();
+
 
     }
 
     private void Update()
     {
         CheckGrouding();
-        if (_playerClimbing.IsClimbing)
+        if (_player.IsClimbing)
         {
             _jumpRemain = 1;
             return;
         }
 
-        if (_playerCroching.IsCroching) return;
-        if (_playerSwimming.IsSwimming) return;
+        if (_player.IsSwimming) return;
+
+
         _player.VerticalVelocity = _player.Rb.linearVelocityY;
 
 
@@ -55,7 +52,7 @@ public class PlayerJumping : MonoBehaviour
     }
     private void CheckGrouding()
     {
-        IsGrounded = false;
+        _player.IsGrounded = false;
         IsOnSnow = false;
 
         LayerMask groundedLayerMask = _player.GetGroundLayerMask();
@@ -65,17 +62,17 @@ public class PlayerJumping : MonoBehaviour
         RaycastHit2D hit = Physics2D.BoxCast(origin,
             new Vector2(_feetSize, 0.1f), 0, Vector2.down, 0.1f, groundedLayerMask);
 
-        if (hit.collider != null)
+        if (hit.collider != null && !hit.collider.isTrigger)
         {
-            IsGrounded = true;
+            _player.IsGrounded = true;
             IsOnSnow = hit.collider.CompareTag(Ground.SNOW_TAG);
         }
 
-        if (IsGrounded && _player.VerticalVelocity == 0f)
+        if (_player.IsGrounded && _player.VerticalVelocity == 0f)
         {
             _jumpRemain = 2;
         }
-        _player.PlayerAnimation.SetJumping(!IsGrounded);
+        _player.PlayerAnimation.SetJumping(!_player.IsGrounded);
     }
 
     public void StopJump()

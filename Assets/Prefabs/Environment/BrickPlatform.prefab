@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 884610468012922686}
   - component: {fileID: 9012005955101641033}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BrickPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BrickPlatform
   count: 1
+  _brickPrefab: {fileID: 7061615158168767270, guid: 8975639a49ca88c4cb8659e013aa8f2f, type: 3}
   _brickList:
   - {fileID: 3979788564909361796}
-  _brickPrefab: {fileID: 7061615158168767270, guid: 8975639a49ca88c4cb8659e013aa8f2f, type: 3}
 --- !u!1001 &6252378436279222690
 PrefabInstance:
   m_ObjectHideFlags: 0

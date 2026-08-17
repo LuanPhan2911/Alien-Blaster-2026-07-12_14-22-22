@@ -6,21 +6,20 @@ public class Ladder : MonoBehaviour
 {
     [SerializeField] private BoxCollider2D _topLadderCollider2d;
 
+    private Player _player;
 
-    private PlayerSprite _playerSprite;
-    private PlayerClimbing _playClimbing;
     private void Update()
     {
 
-        if (_playerSprite != null && _playClimbing != null)
+        if (_player != null)
         {
-            if (_playClimbing.IsClimbing)
+            if (_player.IsClimbing)
             {
-                _playerSprite.IgnoreCollision(_topLadderCollider2d, true);
+                _player.PlayerSprite.IgnoreCollision(_topLadderCollider2d, true);
             }
             else
             {
-                _playerSprite.IgnoreCollision(_topLadderCollider2d, false);
+                _player.PlayerSprite.IgnoreCollision(_topLadderCollider2d, false);
             }
         }
     }
@@ -29,9 +28,7 @@ public class Ladder : MonoBehaviour
         if (playerCollider.TryGetComponent(out PlayerClimbing playerClimbing))
         {
             playerClimbing.CanClimb = true;
-
-            _playClimbing = playerClimbing;
-            _playerSprite = playerCollider.GetComponent<PlayerSprite>();
+            _player = playerClimbing.GetComponent<Player>();
 
 
         }
@@ -42,9 +39,7 @@ public class Ladder : MonoBehaviour
         if (playerCollider.TryGetComponent(out PlayerClimbing playerClimbing))
         {
             playerClimbing.CanClimb = false;
-
-            _playClimbing = null;
-            _playerSprite = null;
+            _player = null;
 
 
         }

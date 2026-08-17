@@ -4,8 +4,6 @@ public class PlayerClimbing : MonoBehaviour
 {
 
     [SerializeField] private float _climbingSpeed = 1f;
-
-    public bool IsClimbing = false;
     public bool CanClimb = false;
 
     private Player _player;
@@ -25,7 +23,7 @@ public class PlayerClimbing : MonoBehaviour
         {
             if (Mathf.Abs(verticalInput) > 0.1f)
             {
-                IsClimbing = true;
+                _player.IsClimbing = true;
                 _player.PlayerAnimation.SetClimbing(true);
                 _player.PlayerAnimation.StartCurrentAnimation();
                 _player.VerticalVelocity = verticalInput * _climbingSpeed;
@@ -33,26 +31,26 @@ public class PlayerClimbing : MonoBehaviour
             else
             {
                 // player is not climbing
-                if (IsClimbing)
+                if (_player.IsClimbing)
                 {
                     _player.VerticalVelocity = 0f;
                     _player.PlayerAnimation.PauseCurrentAnimation();
                 }
 
-                if (IsClimbing && _playerJumping.IsGrounded && Mathf.Abs(horizontalInput) > 0.1f)
+                if (_player.IsClimbing && _player.IsGrounded && Mathf.Abs(horizontalInput) > 0.1f)
                 {
                     Debug.Log("Player want to movement");
-                    IsClimbing = false;
+                    _player.IsClimbing = false;
                     _player.PlayerAnimation.SetClimbing(false);
                     _player.PlayerAnimation.StartCurrentAnimation();
 
                 }
 
                 // Stop climb
-                if (IsClimbing && _player.PlayerInput.actions["Jump"].IsPressed())
+                if (_player.IsClimbing && _player.PlayerInput.actions["Jump"].IsPressed())
                 {
                     Debug.Log("Player Stop climbing");
-                    IsClimbing = false;
+                    _player.IsClimbing = false;
                     _player.PlayerAnimation.SetClimbing(false);
                     _player.PlayerAnimation.StartCurrentAnimation();
                     _player.VerticalVelocity = 0f;
@@ -65,7 +63,7 @@ public class PlayerClimbing : MonoBehaviour
         }
         else
         {
-            IsClimbing = false;
+            _player.IsClimbing = false;
             _player.PlayerAnimation.SetClimbing(false);
             _player.PlayerAnimation.StartCurrentAnimation();
 

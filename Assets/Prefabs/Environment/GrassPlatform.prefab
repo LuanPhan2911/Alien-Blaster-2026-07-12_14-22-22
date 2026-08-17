@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5476775766909561024}
   - component: {fileID: 949497056096551485}
   - component: {fileID: 6616711399265251537}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: GrassPlatform
   m_TagString: Grass
   m_Icon: {fileID: 0}

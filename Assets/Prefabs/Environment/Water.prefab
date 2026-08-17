@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 583138561
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 8509550459451208454, guid: 50f7ec9dd7e18b84bb72e776e179e0f9, type: 3}
@@ -169,7 +169,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 583138561
-  m_SortingLayer: 3
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1590736633413522298, guid: 0f1487ad0f0786842933647f32ce1258, type: 3}
@@ -233,9 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterParalax
   _paralaxSpeed: 0.5
-  _topTransform: {fileID: 8693819234423872801}
-  _bottomTransform: {fileID: 6603599277952535166}
-  _boxCollider2d: {fileID: 7536303412437270061}
+  _maxDistanceMoving: 1
 --- !u!114 &7122470587425612007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,7 +277,7 @@ BoxCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 1
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -2}
@@ -308,7 +306,7 @@ BuoyancyEffector2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_SurfaceLevel: 0
-  m_Density: 2
+  m_Density: 1
   m_LinearDamping: 5
   m_AngularDamping: 5
   m_FlowAngle: 0

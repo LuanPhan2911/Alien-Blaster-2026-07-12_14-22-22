@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 1639335067965811006}
   - component: {fileID: 7890180899741258864}
   - component: {fileID: 4740449575249051398}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: MovingPlatform
   m_TagString: Grass
   m_Icon: {fileID: 0}

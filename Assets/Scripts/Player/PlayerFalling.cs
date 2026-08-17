@@ -9,14 +9,12 @@ public class PlayerFalling : MonoBehaviour
     [SerializeField] private float _fallingStunedDuration = 0.5f;
     [SerializeField] private AudioClip _fallingSound;
     private Player _player;
-    private PlayerCroching _playerCroching;
 
-    public bool IsFalling = false;
 
     private void Awake()
     {
         _player = GetComponent<Player>();
-        _playerCroching = GetComponent<PlayerCroching>();
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -26,9 +24,10 @@ public class PlayerFalling : MonoBehaviour
             if (collision.relativeVelocity.y >= _fallingVelocityThreshhold)
             {
                 // trigger falling animation
-                IsFalling = true;
-                _playerCroching.IsCroching = true;
+                _player.IsFall = true;
                 StartCoroutine(FallingStunnedCorountine());
+                _player.PlayerSprite.SetCrochingCollider();
+                _player.PlayerAnimation.SetCroching(true);
 
                 // trigger falling sound
                 AudioManager.Instance.PlayOneShot(_fallingSound);
@@ -41,7 +40,9 @@ public class PlayerFalling : MonoBehaviour
     private IEnumerator FallingStunnedCorountine()
     {
         yield return new WaitForSeconds(_fallingStunedDuration);
-        IsFalling = false;
+        _player.PlayerSprite.RestoreDefaultColliderSize();
+        _player.PlayerAnimation.SetCroching(false);
+        _player.IsFall = false;
     }
 }
 

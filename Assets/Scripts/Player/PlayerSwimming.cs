@@ -5,25 +5,25 @@ public class PlayerSwimming : MonoBehaviour
 
     [SerializeField] private LayerMask _waterLayerMask;
     [SerializeField] private AudioClip _swimmingSound;
-
-    private PlayerAnimation _playerAnimation;
-
+    private Player _player;
 
 
     private void Awake()
     {
-        _playerAnimation = GetComponent<PlayerAnimation>();
+
+        _player = GetComponent<Player>();
 
     }
 
-    public bool IsSwimming = false;
+
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (_waterLayerMask.Contains(collision.gameObject.layer))
         {
-            IsSwimming = true;
-            _playerAnimation.SetSwimming(true);
+            _player.IsSwimming = true;
+            _player.PlayerAnimation.SetSwimming(true);
 
             AudioManager.Instance.Play(_swimmingSound);
 
@@ -36,9 +36,9 @@ public class PlayerSwimming : MonoBehaviour
     {
         if (_waterLayerMask.Contains(collision.gameObject.layer))
         {
-            IsSwimming = false;
+            _player.IsSwimming = false;
 
-            _playerAnimation.SetSwimming(false);
+            _player.PlayerAnimation.SetSwimming(false);
             AudioManager.Instance.Stop(_swimmingSound);
         }
     }
