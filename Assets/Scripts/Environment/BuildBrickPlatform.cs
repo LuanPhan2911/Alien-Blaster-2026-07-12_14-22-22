@@ -1,41 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
-public class BuildBrickPlatform : MonoBehaviour, IExecuteEditMode
+
+public class BuildBrickPlatform : BaseBuild
 {
-
-
-    private bool _isDirty = false;
-
     [SerializeField, Range(1, 10)] private int count = 1;
     [SerializeField] private GameObject _brickPrefab;
     [SerializeField] private List<GameObject> _brickList = new List<GameObject>();
 
-
-
-
-
-    private void OnValidate()
-    {
-        _isDirty = true;
-    }
-    private void Update()
-    {
-        if (_isDirty)
-        {
-
-            UpdateLayout();
-            _isDirty = false;
-        }
-    }
-    public void UpdateLayout()
+    public override void UpdateLayout()
     {
         ClearBrick();
         CreatePlatform();
 
     }
-
     private void ClearBrick()
     {
         _brickList.Clear();
@@ -48,7 +26,6 @@ public class BuildBrickPlatform : MonoBehaviour, IExecuteEditMode
             }
         }
     }
-
     private void CreatePlatform()
     {
         Vector3 spawnPos = transform.position;

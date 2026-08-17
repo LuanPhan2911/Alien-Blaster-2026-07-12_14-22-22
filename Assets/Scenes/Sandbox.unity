@@ -755,7 +755,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 5028d8b23801dcd4fb28e768e74b94dc, type: 3}
     - target: {fileID: 4727351122545768446, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
       propertyPath: _jumpVelocity
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4854416409012698757, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
       propertyPath: _fallingVelocityThreshhold

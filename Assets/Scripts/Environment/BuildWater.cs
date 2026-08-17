@@ -1,8 +1,7 @@
 using UnityEngine;
 
 
-[ExecuteInEditMode]
-public class BuildWater : MonoBehaviour, IExecuteEditMode
+public class BuildWater : BaseBuild
 {
 
 
@@ -11,28 +10,8 @@ public class BuildWater : MonoBehaviour, IExecuteEditMode
     [SerializeField] private SpriteRenderer _bottomWater;
     [SerializeField] private BoxCollider2D _boxCollider;
 
-    private bool _isDirty = false;
 
-
-    private void OnValidate()
-    {
-        _isDirty = true;
-    }
-
-    private void Update()
-    {
-        if (_isDirty)
-        {
-            UpdateLayout();
-            _isDirty = false;
-        }
-    }
-    private void BuildLayout()
-    {
-
-    }
-
-    public void UpdateLayout()
+    public override void UpdateLayout()
     {
         _topWater.size = new Vector2(_size, _topWater.size.y);
         _bottomWater.size = new Vector2(_size, _bottomWater.size.y);

@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[ExecuteInEditMode]
-public class BuildAirWall : MonoBehaviour, IExecuteEditMode
+
+public class BuildAirWall : BaseBuild
 {
 
 
@@ -11,11 +11,6 @@ public class BuildAirWall : MonoBehaviour, IExecuteEditMode
     [SerializeField] private Color _wallColor;
 
     [SerializeField] private BoxCollider2D _boxCollider;
-
-
-
-    private bool _isDirty = false;
-
     private void OnDrawGizmos()
     {
         Gizmos.color = _wallColor;
@@ -24,25 +19,7 @@ public class BuildAirWall : MonoBehaviour, IExecuteEditMode
         Vector3 center = new Vector3(transform.position.x, offsetY, transform.position.z);
         Gizmos.DrawCube(center, new Vector3(_width, _height, 0f));
     }
-
-
-
-    private void OnValidate()
-    {
-        _isDirty = true;
-    }
-
-    private void Update()
-    {
-        if (_isDirty)
-        {
-            UpdateLayout();
-
-            _isDirty = false;
-        }
-    }
-
-    public void UpdateLayout()
+    public override void UpdateLayout()
     {
         float offsetY = _height / 2 - 2.5f;
         _boxCollider.offset = new Vector2(0, offsetY);

@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[ExecuteInEditMode]
-public class BuildPlatform : MonoBehaviour, IExecuteEditMode
+
+public class BuildPlatform : BaseBuild
 {
 
     [SerializeField] private Transform _grassLeft;
@@ -9,27 +9,11 @@ public class BuildPlatform : MonoBehaviour, IExecuteEditMode
 
     [SerializeField] private BoxCollider2D _boxCollider2D;
     [SerializeField, Range(0, 10)] private int _grassMidSize = 0;
-
-    private bool _isDirty = false;
-
-
-    private void OnValidate()
-    {
-        _isDirty = true;
-    }
-    private void Update()
-    {
-        if (_isDirty)
-        {
-            UpdateLayout();
-            _isDirty = false;
-        }
-    }
     public Vector2 GetSize()
     {
         return _boxCollider2D.size;
     }
-    public void UpdateLayout()
+    public override void UpdateLayout()
     {
         float startPosX = 0.5f;
         SpriteRenderer grassMidSpriteRenderder = GetComponent<SpriteRenderer>();
