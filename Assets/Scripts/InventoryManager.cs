@@ -1,10 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class InventoryItem
+{
+    public ItemData data;
+    public int amount;
+
+    public InventoryItem(ItemData item, int amount)
+    {
+        data = item;
+        this.amount = amount;
+    }
+}
 public class InventoryManager : MonoBehaviour
 {
 
-    public static InventoryManager Instance;
+    public static InventoryManager Instance { get; private set; }
 
 
     private void Awake()
@@ -18,22 +30,54 @@ public class InventoryManager : MonoBehaviour
         Instance = this;
     }
 
-    [SerializeField] private List<ItemData> _listItemData = new List<ItemData>();
+    [SerializeField] private List<InventoryItem> _inventoryItemList = new List<InventoryItem>();
 
 
-    public void AddItem(ItemData itemData)
+    public bool AddItem(ItemData itemData, int amount = 1)
     {
-        _listItemData.Add(itemData);
+        if (itemData.isStackable)
+        {
+            InventoryItem exisitingItem = _inventoryItemList.Find(x => x.data == itemData);
+
+            if (exisitingItem != null)
+            {
+                exisitingItem.amount += amount;
+                return true;
+            }
+        }
+
+        _inventoryItemList.Add(new InventoryItem(itemData, amount));
+        return true;
     }
 
-    public bool HasItem(ItemData itemData)
+    public bool HasItem(ItemData itemData, int amount = 1)
     {
-        return _listItemData.Contains(itemData);
+        InventoryItem exisitingItem = _inventoryItemList.Find(el => el.data == itemData);
+
+        if (exisitingItem == null) return false;
+
+
+        return exisitingItem.amount >= amount;
+    }
+    public bool RemoveItem(ItemData itemData, int amount = 1)
+    {
+        InventoryItem exisitingItem = _inventoryItemList.Find(el => el.data == itemData);
+
+        if (exisitingItem == null) return false;
+
+        if (exisitingItem.amount < amount) return false;
+
+        exisitingItem.amount -= amount;
+
+        if (exisitingItem.amount == 0)
+        {
+            _inventoryItemList.Remove(exisitingItem);
+        }
+
+        return true;
+
     }
 
-    public void ResetInventory()
-    {
-        _listItemData.Clear();
-    }
+
 
 }
