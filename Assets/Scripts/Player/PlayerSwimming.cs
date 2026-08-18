@@ -14,10 +14,6 @@ public class PlayerSwimming : MonoBehaviour
         _player = GetComponent<Player>();
 
     }
-
-
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (_waterLayerMask.Contains(collision.gameObject.layer))

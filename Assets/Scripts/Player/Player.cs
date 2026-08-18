@@ -18,6 +18,8 @@ public partial class Player : MonoBehaviour
     public bool IsFall;
     public bool IsClimbing;
 
+    public float GravityScale = 2f;
+
 
 
     public PlayerAnimation PlayerAnimation { get; private set; }
@@ -33,6 +35,10 @@ public partial class Player : MonoBehaviour
     private KnockbackReceiver _knockbackReceiver;
     private DamageFlash _damageFlash;
     private PlayerData _playerData;
+    private PlayerJumping _playerJumping;
+    private PlayerFalling _playerFalling;
+    private PlayerMoving _playerMoving;
+    private PlayerClimbing _playerClimbing;
 
     public int Coin { get => _playerData.Coin; private set => _playerData.Coin = value; }
     public int Health { get => _playerData.Health; private set => _playerData.Health = value; }
@@ -50,8 +56,16 @@ public partial class Player : MonoBehaviour
 
         _knockbackReceiver = GetComponent<KnockbackReceiver>();
         _damageFlash = GetComponent<DamageFlash>();
+        _playerJumping = GetComponent<PlayerJumping>();
+        _playerMoving = GetComponent<PlayerMoving>();
+        _playerFalling = GetComponent<PlayerFalling>();
+        _playerClimbing = GetComponent<PlayerClimbing>();
+
+
 
     }
+
+
     private void Start()
     {
         _playerData = GameManager.Instance.PlayerData;
@@ -63,44 +77,64 @@ public partial class Player : MonoBehaviour
 
 
 
-
     private void Update()
     {
+        HandleVelocity();
+        _playerJumping.GroundCheck();
+
+
         if (IsFall)
         {
+            // stunned player when falling great height
             HorizontalVelocity = 0;
             VerticalVelocity = 0;
+            return;
         }
+        if (!IsClimbing)
+        {
+            _playerJumping.HandleJump();
+            _playerMoving.HandleMoving();
+        }
+
+
+        _playerClimbing.HandleClimbing();
+
+
+
+
+
+    }
+    private void LateUpdate()
+    {
+        PlayerSprite.UpdateSprite();
+    }
+
+    private void HandleVelocity()
+    {
         if (IsClimbing)
         {
             HorizontalVelocity = 0;
             Rb.gravityScale = 0f;
+            return;
+        }
+
+        if (VerticalVelocity >= 0)
+        {
+            _playerJumping.HandleJumpVelocity();
         }
         else
         {
-            Rb.gravityScale = 1;
+            _playerFalling.HandleFallingVelocity();
         }
-
-        if (IsSwimming)
-        {
-            VerticalVelocity = Rb.linearVelocityY;
-
-        }
-
-
 
     }
 
     private void FixedUpdate()
     {
-
-
         if (_knockbackReceiver.IsKnockbacked) return;
-
-
-
         Rb.linearVelocity = new Vector2(HorizontalVelocity, VerticalVelocity);
     }
+
 
 
 

@@ -86,7 +86,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 10, y: 5}
+  m_Size: {x: 10.27, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -177,7 +177,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 10, y: 1}
+  m_Size: {x: 10.27, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -193,6 +193,7 @@ GameObject:
   - component: {fileID: 8778182335743819303}
   - component: {fileID: 3246442657170484246}
   - component: {fileID: 7122470587425612007}
+  - component: {fileID: 5474178465471315406}
   - component: {fileID: 7536303412437270061}
   - component: {fileID: 1974146996455133887}
   - component: {fileID: 5696895043267340165}
@@ -246,6 +247,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2228ea3312a1d0d4b87f21308ec0bc40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Water
+--- !u!114 &5474178465471315406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8606839594212280707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9695bea105e3b3a459c820004cfb7224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterArea
+  _size: 10.27
+  _topWater: {fileID: 9005513227838399201}
+  _bottomWater: {fileID: 5879188256256157287}
+  _boxCollider: {fileID: 7536303412437270061}
 --- !u!61 &7536303412437270061
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -290,7 +307,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 10, y: 5}
+  m_Size: {x: 10.27, y: 5}
   m_EdgeRadius: 0
 --- !u!253 &1974146996455133887
 BuoyancyEffector2D:
@@ -306,7 +323,7 @@ BuoyancyEffector2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_SurfaceLevel: 0
-  m_Density: 1
+  m_Density: 2
   m_LinearDamping: 5
   m_AngularDamping: 5
   m_FlowAngle: 0
@@ -324,7 +341,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 751222856e5592842a392e9e93782bd9, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

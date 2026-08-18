@@ -18,13 +18,8 @@ public class PlayerMoving : MonoBehaviour
         _player = GetComponent<Player>();
 
     }
-
-    private void Update()
+    public void HandleMoving()
     {
-
-        if (_player.IsClimbing) return;
-
-
         float horizontalInput = _player.PlayerInput.actions["Move"].ReadValue<Vector2>().x;
 
         float horizontalSpeed = _player.IsSwimming ? _horizontalSwimmingSpeed : _horizontalMaxSpeed;

@@ -5,9 +5,10 @@ public class PlayerFalling : MonoBehaviour
 {
 
 
-    [SerializeField] private float _fallingVelocityThreshhold = 10f;
+    [SerializeField] private float _maxFallingVelocity = 12f;
     [SerializeField] private float _fallingStunedDuration = 0.5f;
     [SerializeField] private AudioClip _fallingSound;
+    [SerializeField] private float _fallingSpeedMultiplier = 2f;
     private Player _player;
 
 
@@ -16,33 +17,46 @@ public class PlayerFalling : MonoBehaviour
         _player = GetComponent<Player>();
 
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+
+
+
+    public void HandleFallingVelocity()
     {
-        if (_player.GetGroundLayerMask().Contains(collision.gameObject.layer))
-        {
-
-            if (collision.relativeVelocity.y >= _fallingVelocityThreshhold)
-            {
-                // trigger falling animation
-                _player.IsFall = true;
-                StartCoroutine(FallingStunnedCorountine());
-                _player.PlayerSprite.SetCrochingCollider();
-                _player.PlayerAnimation.SetCroching(true);
-
-                // trigger falling sound
-                AudioManager.Instance.PlayOneShot(_fallingSound);
-
-
-            }
-        }
+        _player.Rb.gravityScale = _player.GravityScale * _fallingSpeedMultiplier;
+        _player.VerticalVelocity = Mathf.Max(_player.Rb.linearVelocityY, -_maxFallingVelocity);
     }
-
     private IEnumerator FallingStunnedCorountine()
     {
         yield return new WaitForSeconds(_fallingStunedDuration);
         _player.PlayerSprite.RestoreDefaultColliderSize();
         _player.PlayerAnimation.SetCroching(false);
         _player.IsFall = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (_player.GetGroundLayerMask().Contains(collision.gameObject.layer))
+        {
+            float fallingVelocity = collision.relativeVelocity.y;
+            HanleFallGreatHeight(fallingVelocity);
+
+        }
+    }
+    private void HanleFallGreatHeight(float fallVelocity)
+    {
+        if (fallVelocity >= _maxFallingVelocity)
+        {
+            // trigger falling animation
+            _player.IsFall = true;
+            StartCoroutine(FallingStunnedCorountine());
+            _player.PlayerSprite.SetCrochingCollider();
+            _player.PlayerAnimation.SetCroching(true);
+
+            // trigger falling sound
+            AudioManager.Instance.PlayOneShot(_fallingSound);
+
+
+        }
     }
 }
 

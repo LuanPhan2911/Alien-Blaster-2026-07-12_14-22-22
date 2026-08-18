@@ -48,6 +48,7 @@ Transform:
   m_Children:
   - {fileID: 6741762303954748074}
   - {fileID: 4226913899027839806}
+  - {fileID: 1672828182396118456}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &203626855447978277
@@ -96,7 +97,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1891796409
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 402502597922571196, guid: 73d4dae70d4022844a443f1de8996d64, type: 3}
@@ -147,7 +148,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e893edc8ff2927940807d75b3607f086, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -215,13 +216,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 489cfd8e36569f247ab0b83542dcd52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  IsOnSnow: 0
   HorizontalVelocity: 0
   VerticalVelocity: 0
-  IsStunned: 0
+  IsGrounded: 0
+  IsSwimming: 0
+  IsFall: 0
+  IsClimbing: 0
+  GravityScale: 2
   _groundLayerMask:
     serializedVersion: 2
-    m_Bits: 832
+    m_Bits: 320
   _hurtSound: {fileID: 8300000, guid: 0d1a58769e7e82f44a3d3a95ff901221, type: 3}
 --- !u!114 &6360542579684432280
 MonoBehaviour:
@@ -235,6 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc9ab9b35bae014bad68858b80e2a20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSprite
+  _crochingColliderSizeY: 1
 --- !u!114 &7612940486204956263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +269,19 @@ MonoBehaviour:
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4727351122545768446}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_DeviceRegainedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -289,12 +306,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d599fc8a77e0454b984af1767e700c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerJumping
-  _jumpVelocity: 5
-  _jumpDuration: 0.5
-  _feetSize: 1
+  _jumpVelocity: 6
+  _airJumpVelocity: 4
+  _maxJumpDurationPress: 0.5
   _jumpSound: {fileID: 8300000, guid: 5028d8b23801dcd4fb28e768e74b94dc, type: 3}
-  IsGrounded: 0
-  IsOnSnow: 0
+  _groundCheckTransform: {fileID: 1672828182396118456}
+  _groundCheckSize: {x: 0.5, y: 0.05}
+  _maxJumps: 2
 --- !u!114 &5781728952320712695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,10 +386,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c03df7cd7d82a948ac6a089ab64d6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFalling
-  _fallingVelocityThreshhold: 10
+  _maxFallingVelocity: 18
   _fallingStunedDuration: 0.5
-  _fallingColliderSizeY: 1
   _fallingSound: {fileID: 8300000, guid: ff9fad9534614b849b1a2eae6a07af39, type: 3}
+  _fallingSpeedMultiplier: 1.5
 --- !u!114 &6848340107228430087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,7 +406,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16
   _swimmingSound: {fileID: 8300000, guid: 549595360b0277e418938f8209c09789, type: 3}
-  IsSwimming: 0
 --- !u!114 &8088644575292126995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,8 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe5a2230f5bd5414b9156077be58845b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerClimbing
-  _climbingSpeed: 1
-  IsClimbing: 0
+  _climbingSpeed: 1.5
   CanClimb: 0
 --- !u!1 &3866191322624772891
 GameObject:
@@ -727,3 +743,34 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
+--- !u!1 &8250375010600104754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1672828182396118456}
+  m_Layer: 7
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1672828182396118456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8250375010600104754}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.576, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6951377177907107467}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -28,7 +28,7 @@ public class Brick : MonoBehaviour, ITakeLaserDamagable
 
             if (dotVal > 0.5f)
             {
-                player.GetComponent<PlayerJumping>().StopJump();
+
 
                 DestroySelf();
             }

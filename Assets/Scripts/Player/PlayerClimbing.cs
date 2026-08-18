@@ -7,21 +7,23 @@ public class PlayerClimbing : MonoBehaviour
     public bool CanClimb = false;
 
     private Player _player;
-    private PlayerJumping _playerJumping;
+
     private void Awake()
     {
         _player = GetComponent<Player>();
-        _playerJumping = GetComponent<PlayerJumping>();
+
     }
 
-    private void Update()
+    public void HandleClimbing()
     {
+
 
         float verticalInput = _player.PlayerInput.actions["Move"].ReadValue<Vector2>().y;
         float horizontalInput = _player.PlayerInput.actions["Move"].ReadValue<Vector2>().x;
         if (CanClimb)
         {
-            if (Mathf.Abs(verticalInput) > 0.1f)
+            const float thresholdInput = 0.1f;
+            if (Mathf.Abs(verticalInput) > thresholdInput)
             {
                 _player.IsClimbing = true;
                 _player.PlayerAnimation.SetClimbing(true);
@@ -37,7 +39,7 @@ public class PlayerClimbing : MonoBehaviour
                     _player.PlayerAnimation.PauseCurrentAnimation();
                 }
 
-                if (_player.IsClimbing && _player.IsGrounded && Mathf.Abs(horizontalInput) > 0.1f)
+                if (_player.IsClimbing && _player.IsGrounded && Mathf.Abs(horizontalInput) > thresholdInput)
                 {
                     Debug.Log("Player want to movement");
                     _player.IsClimbing = false;
@@ -47,7 +49,7 @@ public class PlayerClimbing : MonoBehaviour
                 }
 
                 // Stop climb
-                if (_player.IsClimbing && _player.PlayerInput.actions["Jump"].IsPressed())
+                if (_player.IsClimbing && _player.PlayerInput.actions["Jump"].triggered)
                 {
                     Debug.Log("Player Stop climbing");
                     _player.IsClimbing = false;
@@ -68,6 +70,7 @@ public class PlayerClimbing : MonoBehaviour
             _player.PlayerAnimation.StartCurrentAnimation();
 
         }
+
     }
 
 

@@ -2,82 +2,90 @@ using UnityEngine;
 
 public class PlayerJumping : MonoBehaviour
 {
-    [SerializeField] private float _jumpVelocity = 5f;
-    [SerializeField] private float _jumpDuration = 0.5f;
-    [SerializeField] private float _feetSize = 1f;
+
+    [SerializeField] private float _jumpVelocity = 4f;
+    [SerializeField] private float _airJumpVelocity = 2f;
+    [SerializeField] private float _maxJumpDurationPress = 0.5f;
+
     [SerializeField] private AudioClip _jumpSound;
 
+    [Header("Ground Check")]
+    [SerializeField] private Transform _groundCheckTransform;
+    [SerializeField] private Vector2 _groundCheckSize = new Vector2(1, 0.2f);
+
+    [SerializeField] private int _maxJumps = 2;
+
+
     private Player _player;
+    private int _jumpRemaining;
 
+    private float _duration;
+    private bool _isJumpPress;
 
-    public bool IsOnSnow = false;
-    private int _jumpRemain = 2;
-    private float _jumpEndTime;
 
     private void Awake()
     {
         _player = GetComponent<Player>();
-
-
     }
-
-    private void Update()
+    private void OnDrawGizmos()
     {
-        CheckGrouding();
-        if (_player.IsClimbing)
-        {
-            _jumpRemain = 1;
-            return;
-        }
+        Gizmos.color = Color.red;
 
-        if (_player.IsSwimming) return;
+        Gizmos.DrawWireCube(_groundCheckTransform.position, _groundCheckSize);
+    }
 
-
+    public void HandleJumpVelocity()
+    {
         _player.VerticalVelocity = _player.Rb.linearVelocityY;
+        _player.Rb.gravityScale = _player.GravityScale;
+    }
+    public void HandleJump()
+    {
 
-
-        if (_player.PlayerInput.actions["Jump"].WasPressedThisFrame() && _jumpRemain > 0)
+        if (_player.PlayerInput.actions["Jump"].WasPressedThisFrame() && _jumpRemaining > 0)
         {
-            _jumpEndTime = Time.time + _jumpDuration;
-            _jumpRemain--;
-            Debug.Log("Play jump sound");
+            _jumpRemaining--;
+            _isJumpPress = true;
+            _duration = Time.time + _maxJumpDurationPress;
             AudioManager.Instance.PlayOneShot(_jumpSound);
+        }
+
+        if (_player.PlayerInput.actions["Jump"].IsPressed() && Time.time < _duration)
+        {
+
+            if (_jumpRemaining == 1)
+            {
+                _player.VerticalVelocity = _jumpVelocity;
+            }
+            else if (_jumpRemaining == 0)
+            {
+                _player.VerticalVelocity = _airJumpVelocity;
+            }
+
 
         }
-        if (_player.PlayerInput.actions["Jump"].IsPressed() && Time.time < _jumpEndTime)
+        else
         {
-            _player.VerticalVelocity = _jumpVelocity;
-
+            _isJumpPress = false;
         }
     }
-    private void CheckGrouding()
+
+    public void GroundCheck()
     {
         _player.IsGrounded = false;
-        IsOnSnow = false;
 
-        LayerMask groundedLayerMask = _player.GetGroundLayerMask();
-        Vector2 origin = new Vector2(transform.position.x,
-            transform.position.y - _player.SpriteRenderer.bounds.extents.y);
+        LayerMask groundMask = _player.GetGroundLayerMask();
 
-        RaycastHit2D hit = Physics2D.BoxCast(origin,
-            new Vector2(_feetSize, 0.1f), 0, Vector2.down, 0.1f, groundedLayerMask);
+        Collider2D collider = Physics2D.OverlapBox(_groundCheckTransform.position, _groundCheckSize, 0f, groundMask);
 
-        if (hit.collider != null && !hit.collider.isTrigger)
+        if (collider != null && !collider.isTrigger && !_isJumpPress)
         {
             _player.IsGrounded = true;
-            IsOnSnow = hit.collider.CompareTag(Ground.SNOW_TAG);
-        }
-
-        if (_player.IsGrounded && _player.VerticalVelocity == 0f)
-        {
-            _jumpRemain = 2;
+            _jumpRemaining = _maxJumps;
         }
         _player.PlayerAnimation.SetJumping(!_player.IsGrounded);
     }
 
-    public void StopJump()
-    {
-        _jumpEndTime = Time.time;
-    }
+
 
 }

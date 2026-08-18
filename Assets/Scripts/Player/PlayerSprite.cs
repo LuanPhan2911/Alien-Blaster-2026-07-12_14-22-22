@@ -27,12 +27,8 @@ public class PlayerSprite : MonoBehaviour
         DefaultColliderSizeX = _playerCollider.size.x;
         DefaultColliderSizeY = _playerCollider.size.y;
     }
-    private void Update()
-    {
-        UpdateSprite();
-    }
 
-    private void UpdateSprite()
+    public void UpdateSprite()
     {
         _playerAnimation.SetHorizontal(_player.HorizontalVelocity);
         if (_player.HorizontalVelocity > 0)
