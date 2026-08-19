@@ -13,12 +13,13 @@ public class PlayerAnimation : MonoBehaviour
     const string IS_CROCHING = "IsCroching";
     const string IS_SWIMMING = "IsSwimming";
 
-
+    private Player _player;
 
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        _player = GetComponent<Player>();
     }
 
 
@@ -52,5 +53,11 @@ public class PlayerAnimation : MonoBehaviour
     public void StartCurrentAnimation()
     {
         animator.speed = 1f;
+    }
+
+    public void UpdateAnimation()
+    {
+        SetHorizontal(_player.HorizontalVelocity);
+        SetJumping(!_player.IsGrounded);
     }
 }

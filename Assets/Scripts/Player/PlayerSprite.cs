@@ -7,8 +7,7 @@ public class PlayerSprite : MonoBehaviour
 
     private CapsuleCollider2D _playerCollider;
     private Player _player;
-    private PlayerAnimation _playerAnimation;
-    private SpriteRenderer _playerSpriteRenderer;
+
 
     [SerializeField] private float _crochingColliderSizeY = 1f;
 
@@ -19,8 +18,6 @@ public class PlayerSprite : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<Player>();
-        _playerAnimation = GetComponent<PlayerAnimation>();
-        _playerSpriteRenderer = GetComponent<SpriteRenderer>();
         _playerCollider = GetComponent<CapsuleCollider2D>();
 
 
@@ -30,15 +27,21 @@ public class PlayerSprite : MonoBehaviour
 
     public void UpdateSprite()
     {
-        _playerAnimation.SetHorizontal(_player.HorizontalVelocity);
         if (_player.HorizontalVelocity > 0)
         {
-            _playerSpriteRenderer.flipX = false;
+            Flip(false);
         }
         else if (_player.HorizontalVelocity < 0)
         {
-            _playerSpriteRenderer.flipX = true;
+            Flip(true);
         }
+
+
+    }
+    public void Flip(bool isFacingRight)
+    {
+
+        _player.SpriteRenderer.flipX = isFacingRight;
     }
 
     public void SetColliderSizeX(float sizeX)

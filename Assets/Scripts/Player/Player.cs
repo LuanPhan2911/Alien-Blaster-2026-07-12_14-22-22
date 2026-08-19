@@ -17,8 +17,10 @@ public partial class Player : MonoBehaviour
     public bool IsSwimming;
     public bool IsFall;
     public bool IsClimbing;
+    public bool IsWallSling;
 
-    public float GravityScale = 2f;
+    public float GravityScale = 1f;
+
 
 
 
@@ -39,6 +41,7 @@ public partial class Player : MonoBehaviour
     private PlayerFalling _playerFalling;
     private PlayerMoving _playerMoving;
     private PlayerClimbing _playerClimbing;
+    private PlayerWallSliding _playerWallSliding;
 
     public int Coin { get => _playerData.Coin; private set => _playerData.Coin = value; }
     public int Health { get => _playerData.Health; private set => _playerData.Health = value; }
@@ -60,6 +63,7 @@ public partial class Player : MonoBehaviour
         _playerMoving = GetComponent<PlayerMoving>();
         _playerFalling = GetComponent<PlayerFalling>();
         _playerClimbing = GetComponent<PlayerClimbing>();
+        _playerWallSliding = GetComponent<PlayerWallSliding>();
 
 
 
@@ -81,8 +85,9 @@ public partial class Player : MonoBehaviour
     {
         HandleVelocity();
         _playerJumping.GroundCheck();
+        _playerWallSliding.WallCheck();
 
-
+        if (_knockbackReceiver.IsKnockbacked) return;
         if (IsFall)
         {
             // stunned player when falling great height
@@ -106,7 +111,12 @@ public partial class Player : MonoBehaviour
     }
     private void LateUpdate()
     {
-        PlayerSprite.UpdateSprite();
+        if (!IsWallSling)
+        {
+            PlayerSprite.UpdateSprite();
+        }
+
+        PlayerAnimation.UpdateAnimation();
     }
 
     private void HandleVelocity()
@@ -131,7 +141,7 @@ public partial class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_knockbackReceiver.IsKnockbacked) return;
+
         Rb.linearVelocity = new Vector2(HorizontalVelocity, VerticalVelocity);
     }
 

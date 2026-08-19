@@ -83,7 +83,7 @@ public class PlayerJumping : MonoBehaviour
             _player.IsGrounded = true;
             _jumpRemaining = _maxJumps;
         }
-        _player.PlayerAnimation.SetJumping(!_player.IsGrounded);
+
     }
 
 
