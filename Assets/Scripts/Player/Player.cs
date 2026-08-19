@@ -12,14 +12,16 @@ public partial class Player : MonoBehaviour
 
     public float HorizontalVelocity;
     public float VerticalVelocity;
-
     public bool IsGrounded;
     public bool IsSwimming;
     public bool IsFall;
     public bool IsClimbing;
-    public bool IsWallSling;
-
+    public bool IsWallSliding;
+    public bool IsWallJumping;
     public float GravityScale = 1f;
+    public int JumpAvailable = 2;
+    public float AirJumpVelocity = 4f;
+    public float MaxAirJumpDuration = 0.4f;
 
 
 
@@ -42,6 +44,7 @@ public partial class Player : MonoBehaviour
     private PlayerMoving _playerMoving;
     private PlayerClimbing _playerClimbing;
     private PlayerWallSliding _playerWallSliding;
+    private PlayerWallJumping _playerWallJumping;
 
     public int Coin { get => _playerData.Coin; private set => _playerData.Coin = value; }
     public int Health { get => _playerData.Health; private set => _playerData.Health = value; }
@@ -64,6 +67,7 @@ public partial class Player : MonoBehaviour
         _playerFalling = GetComponent<PlayerFalling>();
         _playerClimbing = GetComponent<PlayerClimbing>();
         _playerWallSliding = GetComponent<PlayerWallSliding>();
+        _playerWallJumping = GetComponent<PlayerWallJumping>();
 
 
 
@@ -97,8 +101,23 @@ public partial class Player : MonoBehaviour
         }
         if (!IsClimbing)
         {
+            if (IsGrounded)
+            {
+                _playerWallJumping.JumpRemaining = 0;
+            }else if (IsWallSliding)
+            {
+                _playerJumping.JumpRemaining = 0;
+            }
+
+            _playerWallJumping.HandleWallJump();
             _playerJumping.HandleJump();
-            _playerMoving.HandleMoving();
+           
+         
+
+            if (!IsWallJumping)
+            {
+                _playerMoving.HandleMoving();
+            }
         }
 
 
@@ -111,7 +130,7 @@ public partial class Player : MonoBehaviour
     }
     private void LateUpdate()
     {
-        if (!IsWallSling)
+        if (!IsWallSliding)
         {
             PlayerSprite.UpdateSprite();
         }

@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 4854416409012698757}
   - component: {fileID: 6848340107228430087}
   - component: {fileID: 8088644575292126995}
+  - component: {fileID: 2927552707843787982}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -49,6 +50,8 @@ Transform:
   - {fileID: 6741762303954748074}
   - {fileID: 4226913899027839806}
   - {fileID: 1672828182396118456}
+  - {fileID: 7526601274356305735}
+  - {fileID: 8297094693124432445}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &203626855447978277
@@ -222,6 +225,7 @@ MonoBehaviour:
   IsSwimming: 0
   IsFall: 0
   IsClimbing: 0
+  IsWallSling: 0
   GravityScale: 2
   _groundLayerMask:
     serializedVersion: 2
@@ -386,7 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c03df7cd7d82a948ac6a089ab64d6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerFalling
-  _maxFallingVelocity: 18
+  _maxFallingVelocity: 25
   _fallingStunedDuration: 0.5
   _fallingSound: {fileID: 8300000, guid: ff9fad9534614b849b1a2eae6a07af39, type: 3}
   _fallingSpeedMultiplier: 1.5
@@ -420,6 +424,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerClimbing
   _climbingSpeed: 1.5
   CanClimb: 0
+--- !u!114 &2927552707843787982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577240107966679132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36e16a1726424644a81bdf32421640b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWallSliding
+  _wallCheckSize: {x: 0.1, y: 1}
+  _wallCheckLeft: {fileID: 7526601274356305735}
+  _wallCheckRight: {fileID: 8297094693124432445}
+  _sliddingSpeed: 2
+  _wallCheckMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &3866191322624772891
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,6 +515,37 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 504620880501667345}
+--- !u!1 &5041237440233184510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8297094693124432445}
+  m_Layer: 7
+  m_Name: WallCheckRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8297094693124432445
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5041237440233184510}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.372, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6951377177907107467}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5619059793024087488
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,6 +797,37 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
+--- !u!1 &7940664103586027297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7526601274356305735}
+  m_Layer: 7
+  m_Name: WallCheckLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7526601274356305735
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7940664103586027297}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.426, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6951377177907107467}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8250375010600104754
 GameObject:
   m_ObjectHideFlags: 0

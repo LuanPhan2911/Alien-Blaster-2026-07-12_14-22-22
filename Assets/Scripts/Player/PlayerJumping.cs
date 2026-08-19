@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PlayerJumping : MonoBehaviour
 {
+    public int JumpRemaining;
+    [SerializeField] private float _jumpVelocity = 6f;
 
-    [SerializeField] private float _jumpVelocity = 4f;
-    [SerializeField] private float _airJumpVelocity = 2f;
-    [SerializeField] private float _maxJumpDurationPress = 0.5f;
+    [SerializeField] private float _maxGroundJumpDuration = 0.5f;
 
     [SerializeField] private AudioClip _jumpSound;
 
@@ -13,13 +13,12 @@ public class PlayerJumping : MonoBehaviour
     [SerializeField] private Transform _groundCheckTransform;
     [SerializeField] private Vector2 _groundCheckSize = new Vector2(1, 0.2f);
 
-    [SerializeField] private int _maxJumps = 2;
-
+   
 
     private Player _player;
-    private int _jumpRemaining;
+   
 
-    private float _duration;
+    private float _jumpDuration;
     private bool _isJumpPress;
 
 
@@ -41,47 +40,62 @@ public class PlayerJumping : MonoBehaviour
     }
     public void HandleJump()
     {
+        
 
-        if (_player.PlayerInput.actions["Jump"].WasPressedThisFrame() && _jumpRemaining > 0)
+        if (_player.PlayerInput.actions["Jump"].WasPressedThisFrame() && JumpRemaining > 0)
         {
-            _jumpRemaining--;
+            JumpRemaining--;
             _isJumpPress = true;
-            _duration = Time.time + _maxJumpDurationPress;
+            _jumpDuration =0;
             AudioManager.Instance.PlayOneShot(_jumpSound);
         }
 
-        if (_player.PlayerInput.actions["Jump"].IsPressed() && Time.time < _duration)
+        if (_player.PlayerInput.actions["Jump"].IsPressed() && _isJumpPress)
         {
+            _jumpDuration += Time.deltaTime;
+            bool isFirstJump = _player.JumpAvailable - JumpRemaining == 1;
+            bool isAirJump = JumpRemaining == 0;
+            float _maxDuration = isFirstJump ? _maxGroundJumpDuration : _player.MaxAirJumpDuration;
 
-            if (_jumpRemaining == 1)
+            if (_jumpDuration < _maxDuration)
             {
-                _player.VerticalVelocity = _jumpVelocity;
+              
+                if (isFirstJump)
+                {
+                    _player.VerticalVelocity = _jumpVelocity;
+                }
+                else if (isAirJump)
+                {
+                    _player.VerticalVelocity = _player.AirJumpVelocity;
+                }
             }
-            else if (_jumpRemaining == 0)
+            else
             {
-                _player.VerticalVelocity = _airJumpVelocity;
+                _isJumpPress = false;
             }
-
 
         }
-        else
+        if (_player.PlayerInput.actions["Jump"].WasReleasedThisFrame())
         {
             _isJumpPress = false;
         }
+
+
     }
 
     public void GroundCheck()
     {
         _player.IsGrounded = false;
-
+      
+      
         LayerMask groundMask = _player.GetGroundLayerMask();
 
         Collider2D collider = Physics2D.OverlapBox(_groundCheckTransform.position, _groundCheckSize, 0f, groundMask);
 
-        if (collider != null && !collider.isTrigger && !_isJumpPress)
+        if (collider != null && !collider.isTrigger && !_isJumpPress )
         {
             _player.IsGrounded = true;
-            _jumpRemaining = _maxJumps;
+            JumpRemaining = _player.JumpAvailable;
         }
 
     }
