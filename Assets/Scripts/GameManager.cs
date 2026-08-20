@@ -13,17 +13,27 @@ public class GameManager : MonoBehaviour
 
     public List<string> GameNameList = new List<string>();
 
-    public bool IsPlayCinemachine = false;
+
+    public bool IsGamePaused = false;
+
+    public event EventHandler OnGamePauseChanged;
 
 
-    public void SetPlayCinemachine(bool playCinemachine)
+
+
+
+    public void Pause()
     {
-        IsPlayCinemachine = playCinemachine;
+        IsGamePaused= true;
+        Time.timeScale= 0;
+        OnGamePauseChanged?.Invoke(this, EventArgs.Empty);
     }
-
-
-
-
+    public void Unpause()
+    {
+        IsGamePaused = false;
+        Time.timeScale = 1f;
+        OnGamePauseChanged?.Invoke(this, EventArgs.Empty);
+    }
 
 
 

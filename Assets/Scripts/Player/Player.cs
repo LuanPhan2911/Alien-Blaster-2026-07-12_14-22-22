@@ -98,9 +98,30 @@ public partial class Player : MonoBehaviour
         // Update the UI with the current coin count at the start of the game
         OnCoinChanged?.Invoke(this, Coin);
         OnHealthChanged?.Invoke(this, Health);
+
+       
+    }
+    private void OnEnable()
+    {
+        PlayerInput.actions["Pause"].performed += Player_PauseGame;
+    }
+    private void OnDisable()
+    {
+        PlayerInput.actions["Pause"].performed -= Player_PauseGame;
     }
 
-
+    private void Player_PauseGame(InputAction.CallbackContext obj)
+    {
+      
+        if (GameManager.Instance.IsGamePaused)
+        {
+            GameManager.Instance.Unpause();
+        }
+        else
+        {
+            GameManager.Instance.Pause();
+        }
+    }
 
     private void Update()
     {
