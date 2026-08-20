@@ -67,6 +67,7 @@ public class PlayerJumping : MonoBehaviour
                 else if (isAirJump)
                 {
                     _player.VerticalVelocity = _player.AirJumpVelocity;
+                    _player.PlayAirJumpFX();
                 }
             }
             else

@@ -27,11 +27,14 @@ public partial class Player : MonoBehaviour
     public bool IsWallSliding;
     public bool IsWallJumping;
 
-    [Header("Gravity")]
+ 
     public float GravityScale = 1f;
     public int JumpAvailable = 2;
+
+    [Header("Air Jump")]
     public float AirJumpVelocity = 4f;
     public float MaxAirJumpDuration = 0.4f;
+    public ParticleSystem AirJumpFX;
 
     [Header("Mask")]
     public LayerMask GroundLayerMask;
@@ -210,5 +213,13 @@ public partial class Player : MonoBehaviour
         Rb.linearVelocity = Vector2.zero;
 
         Rb.AddForce(normal * force, ForceMode2D.Impulse);
+    }
+
+    public void PlayAirJumpFX()
+    {
+        if (!AirJumpFX.isPlaying)
+        {
+            AirJumpFX.Play();
+        }
     }
 }
