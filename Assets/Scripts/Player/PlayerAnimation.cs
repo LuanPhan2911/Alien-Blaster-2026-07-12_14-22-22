@@ -12,6 +12,7 @@ public class PlayerAnimation : MonoBehaviour
     const string IS_CLIMBING = "IsClimbing";
     const string IS_CROCHING = "IsCroching";
     const string IS_SWIMMING = "IsSwimming";
+    const string IS_SLIDING = "IsSliding";
 
     private Player _player;
 
@@ -59,5 +60,10 @@ public class PlayerAnimation : MonoBehaviour
     {
         SetHorizontal(_player.HorizontalVelocity);
         SetJumping(!_player.IsGrounded);
+        SetSliding(_player.IsWallSliding);
+    }
+    public void SetSliding(bool isSliding)
+    {
+        animator.SetBool(IS_SLIDING, isSliding);
     }
 }

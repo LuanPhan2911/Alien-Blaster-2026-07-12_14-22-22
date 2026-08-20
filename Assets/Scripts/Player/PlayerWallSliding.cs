@@ -52,11 +52,11 @@ public class PlayerWallSliding : MonoBehaviour
             // set wall jump direction
             if (leftCollider != null)
             {
-                _player.PlayerSprite.Flip(false);
+                _player.PlayerSprite.Flip(true);
                 _playerWallJumping.WallJumpDirection = 1;
             }else if(rightCollider!= null)
             {
-                _player.PlayerSprite.Flip(true);
+                _player.PlayerSprite.Flip(false);
                 _playerWallJumping.WallJumpDirection = -1;
             }
         }
