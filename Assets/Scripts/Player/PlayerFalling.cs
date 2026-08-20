@@ -35,7 +35,7 @@ public class PlayerFalling : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (_player.GetGroundLayerMask().Contains(collision.gameObject.layer))
+        if (_player.GroundLayerMask.Contains(collision.gameObject.layer))
         {
             float fallingVelocity = collision.relativeVelocity.y;
             HanleFallGreatHeight(fallingVelocity);

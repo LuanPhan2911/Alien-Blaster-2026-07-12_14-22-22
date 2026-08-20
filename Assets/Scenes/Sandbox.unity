@@ -415,7 +415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1076148309332708220, guid: 1ff0ae16fff868040b9fcfa5e9c1ff59, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.2
+      value: 9.91
       objectReference: {fileID: 0}
     - target: {fileID: 1076148309332708220, guid: 1ff0ae16fff868040b9fcfa5e9c1ff59, type: 3}
       propertyPath: m_LocalPosition.z
@@ -714,6 +714,30 @@ PrefabInstance:
       propertyPath: MaxAirJumpDuration
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 5550621519107340329, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
+      propertyPath: CurrentPlayerVelocity
+      value: 
+      objectReference: {fileID: 11400000, guid: 2ee8f40dbf900b74eb23cd41d94adcb2, type: 2}
+    - target: {fileID: 5550621519107340329, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
+      propertyPath: DefaultPlayerVelocity
+      value: 
+      objectReference: {fileID: 11400000, guid: 2ee8f40dbf900b74eb23cd41d94adcb2, type: 2}
+    - target: {fileID: 5550621519107340329, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
+      propertyPath: WaterLayerMask.m_Bits
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5550621519107340329, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
+      propertyPath: GroundLayerMask.m_Bits
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 5781728952320712695, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
+      propertyPath: _groundVelocity
+      value: 
+      objectReference: {fileID: 11400000, guid: 2ee8f40dbf900b74eb23cd41d94adcb2, type: 2}
+    - target: {fileID: 6848340107228430087, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
+      propertyPath: _waterVelocity
+      value: 
+      objectReference: {fileID: 11400000, guid: d2140061d7516744b9bd29787e620e8d, type: 2}
     - target: {fileID: 6951377177907107467, guid: 523e1f14885f3df4cbcde949cdf98e38, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.4

@@ -10,18 +10,33 @@ public partial class Player : MonoBehaviour
     public const string PLAYER_TAG = "Player";
     public const string PLAYER_MASK = "Player";
 
+    [Header("Player Velocity")]
     public float HorizontalVelocity;
     public float VerticalVelocity;
+
+    public PlayerVelocity DefaultPlayerVelocity;
+    public PlayerVelocity CurrentPlayerVelocity;
+  
+
+
+    [Header("Player State")]
     public bool IsGrounded;
     public bool IsSwimming;
     public bool IsFall;
     public bool IsClimbing;
     public bool IsWallSliding;
     public bool IsWallJumping;
+
+    [Header("Gravity")]
     public float GravityScale = 1f;
     public int JumpAvailable = 2;
     public float AirJumpVelocity = 4f;
     public float MaxAirJumpDuration = 0.4f;
+
+    [Header("Mask")]
+    public LayerMask GroundLayerMask;
+    public LayerMask WaterLayerMask;
+    public LayerMask PlatformLayer;
 
 
 
@@ -30,10 +45,9 @@ public partial class Player : MonoBehaviour
     public SpriteRenderer SpriteRenderer { get; private set; }
     public Rigidbody2D Rb { get; private set; }
     public PlayerInput PlayerInput { get; private set; }
-
     public PlayerSprite PlayerSprite { get; private set; }
 
-    [SerializeField] private LayerMask _groundLayerMask;
+   
     [SerializeField] private AudioClip _hurtSound;
 
     private KnockbackReceiver _knockbackReceiver;
@@ -191,11 +205,6 @@ public partial class Player : MonoBehaviour
         _knockbackReceiver.Knockback(direction);
 
     }
-    public LayerMask GetGroundLayerMask()
-    {
-        return _groundLayerMask;
-    }
-
     public void Bounce(Vector2 normal, float force)
     {
         Rb.linearVelocity = Vector2.zero;

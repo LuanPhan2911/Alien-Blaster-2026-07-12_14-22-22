@@ -88,11 +88,14 @@ public class PlayerJumping : MonoBehaviour
         _player.IsGrounded = false;
       
       
-        LayerMask groundMask = _player.GetGroundLayerMask();
+        LayerMask groundMask = _player.GroundLayerMask;
 
         Collider2D collider = Physics2D.OverlapBox(_groundCheckTransform.position, _groundCheckSize, 0f, groundMask);
 
-        if (collider != null && !collider.isTrigger && !_isJumpPress )
+        bool isHit = collider != null && !collider.isTrigger;
+
+
+        if (( isHit|| _player.IsSwimming) && !_isJumpPress  )
         {
             _player.IsGrounded = true;
             JumpRemaining = _player.JumpAvailable;
