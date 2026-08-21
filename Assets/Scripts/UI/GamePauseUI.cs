@@ -13,27 +13,43 @@ public class GameOptionPanelUI : MonoBehaviour
     [SerializeField] private SoundControlPanelUI _soundControlPanelUI;
 
 
-   
+    private void OnEnable()
+    {
+        _resumeButton.onClick.AddListener(ResumeButtonClick);
+        _soundButton.onClick.AddListener(SoundButtonClick);
+        _closeButton.onClick.AddListener(CloseButtonClick);
+    }
+
+  
+
+    private void OnDisable()
+    {
+        _resumeButton.onClick.RemoveListener(ResumeButtonClick);
+        _soundButton.onClick.RemoveListener(SoundButtonClick);
+        _closeButton.onClick.RemoveListener(CloseButtonClick);
+    }
 
     private void Start()
     {
-        _resumeButton.onClick.AddListener(() =>
-        {
-            GameManager.Instance.Unpause();
-        });
-        _soundButton.onClick.AddListener(() =>
-        {
-            _soundControlPanelUI.Show();
-        });
-
-        _closeButton.onClick.AddListener(() =>
-        {
-            GameManager.Instance.Unpause();
-        });
+       
+       
         GameManager.Instance.OnGamePauseChanged += Instance_OnGamePauseChanged;
         Hide();
     }
 
+    private void ResumeButtonClick()
+    {
+        GameManager.Instance.Unpause();
+    }
+    private void CloseButtonClick()
+    {
+        GameManager.Instance.Unpause();
+    }
+
+    private void SoundButtonClick()
+    {
+        _soundControlPanelUI.Show();
+    }
     private void Instance_OnGamePauseChanged(object sender, System.EventArgs e)
     {
         if (GameManager.Instance.IsGamePaused)

@@ -40,7 +40,7 @@ public class Brick : MonoBehaviour, ITakeLaserDamagable
     private void DestroySelf()
     {
         ParticleSystem particle = Instantiate(_brickBreakParticle, transform.position, Quaternion.identity);
-        AudioManager.Instance.PlayOneShot(_brickBreakSound);
+        AudioManager.Instance.Play(_brickBreakSound, transform.position);
         Destroy(gameObject);
     }
 

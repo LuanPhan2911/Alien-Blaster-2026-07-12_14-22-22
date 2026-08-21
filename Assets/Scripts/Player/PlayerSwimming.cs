@@ -23,7 +23,7 @@ public class PlayerSwimming : MonoBehaviour
             _player.PlayerAnimation.SetSwimming(true);
             _player.CurrentPlayerVelocity = _waterVelocity;
 
-            AudioManager.Instance.Play(_swimmingSound);
+            //AudioManager.Instance.Play(_swimmingSound);
 
            
 
@@ -37,7 +37,7 @@ public class PlayerSwimming : MonoBehaviour
             _player.IsSwimming = false;
             _player.CurrentPlayerVelocity = _player.DefaultPlayerVelocity;
             _player.PlayerAnimation.SetSwimming(false);
-            AudioManager.Instance.Stop(_swimmingSound);
+            //AudioManager.Instance.Stop(_swimmingSound);
         }
     }
 }

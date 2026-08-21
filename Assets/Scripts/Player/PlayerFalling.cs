@@ -53,7 +53,7 @@ public class PlayerFalling : MonoBehaviour
             _player.PlayerAnimation.SetCroching(true);
 
             // trigger falling sound
-            AudioManager.Instance.PlayOneShot(_fallingSound);
+            AudioManager.Instance.Play(_fallingSound, transform.position);
 
 
         }

@@ -14,7 +14,7 @@ public class Coin : MonoBehaviour
             // Destroy the coin object
             gameObject.SetActive(false);
 
-            AudioManager.Instance.PlayOneShot(_coinSound);
+            AudioManager.Instance.Play(_coinSound, transform.position);
 
 
         }

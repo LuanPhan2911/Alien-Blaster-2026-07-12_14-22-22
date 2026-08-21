@@ -47,7 +47,7 @@ public class PlayerJumping : MonoBehaviour
             JumpRemaining--;
             _isJumpPress = true;
             _jumpDuration =0;
-            AudioManager.Instance.PlayOneShot(_jumpSound);
+            AudioManager.Instance.Play(_jumpSound, transform.position);
         }
 
         if (_player.PlayerInput.actions["Jump"].IsPressed() && _isJumpPress)

@@ -1,9 +1,13 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMoving : MonoBehaviour
 {
-    [SerializeField] private AudioClip _walkingSound;
+    [SerializeField] private AudioClip[] _walkingSounds;
+   
     private Player _player;
+    private float _footStepSoundRate = 0.5f;
+    private Coroutine _footStepCoroutine = null;
 
     private void Awake()
     {
@@ -15,15 +19,22 @@ public class PlayerMoving : MonoBehaviour
         float horizontalInput = _player.PlayerInput.actions["Move"].ReadValue<Vector2>().x;
 
         float horizontalVelocity = _player.CurrentPlayerVelocity.HorizontalVelocity;
-        _player.HorizontalVelocity = horizontalInput * horizontalVelocity; 
+        _player.HorizontalVelocity = horizontalInput * horizontalVelocity;
 
-        //if (_playerJumping.IsGrounded && Mathf.Abs(horizontalInput) > 0.5f)
-        //{
-        //    AudioManager.Instance.Play(_walkingSound);
-        //}
-        //else
-        //{
-        //    AudioManager.Instance.Stop(_walkingSound);
-        //}
+        if (_player.IsGrounded && Mathf.Abs(horizontalInput) > 0.1f)
+        {
+            if(_footStepCoroutine== null)
+            {
+                _footStepCoroutine = StartCoroutine(PlayFootStepCoroutine());
+            }
+        }
+     
+    }
+    private IEnumerator PlayFootStepCoroutine()
+    {
+        AudioManager.Instance.Play(_walkingSounds, transform.position);
+        yield return new WaitForSeconds(_footStepSoundRate);
+        _footStepCoroutine = null;
+
     }
 }

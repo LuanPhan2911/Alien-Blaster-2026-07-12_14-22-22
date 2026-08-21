@@ -21,6 +21,6 @@ public class HouseDoor : MonoBehaviour
         _topDoorSpriteRenderer.sprite = _openTopDoor;
         _bottomDoorRenderer.sprite = _openBottomDoor;
 
-        AudioManager.Instance.PlayOneShot(_openDoorSound);
+        AudioManager.Instance.Play(_openDoorSound, transform.position);
     }
 }

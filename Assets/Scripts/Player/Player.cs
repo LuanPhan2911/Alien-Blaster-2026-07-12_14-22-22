@@ -213,7 +213,7 @@ public partial class Player : MonoBehaviour
     public void TakeDamage()
     {
         Health--;
-        AudioManager.Instance.PlayOneShot(_hurtSound);
+        AudioManager.Instance.Play(_hurtSound, transform.position);
         OnHealthChanged?.Invoke(this, Health);
         _damageFlash.Flash();
         if (Health <= 0)
