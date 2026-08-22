@@ -6,7 +6,7 @@ public class PlayerMoving : MonoBehaviour
     [SerializeField] private AudioClip[] _walkingSounds;
    
     private Player _player;
-    private float _footStepSoundRate = 0.5f;
+    private float _footStepSoundRate = 0.3f;
     private Coroutine _footStepCoroutine = null;
 
     private void Awake()

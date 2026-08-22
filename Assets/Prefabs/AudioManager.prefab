@@ -47,8 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   _musicAudioSource: {fileID: 994431069378246893}
   _audioSourcePrefab: {fileID: 284996886513842718, guid: 17b7ec6b9e267df42b1bf6e8046d97f8, type: 3}
-  MusicVolume: 0
-  SoundFxVolume: 0
+  _mainMixer: {fileID: 24100000, guid: 11508bcf46be44e4ab5bdde0fad2e06f, type: 2}
 --- !u!82 &994431069378246893
 AudioSource:
   m_ObjectHideFlags: 0
@@ -58,13 +57,13 @@ AudioSource:
   m_GameObject: {fileID: 1635391333255989428}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1980396921176912043, guid: 11508bcf46be44e4ab5bdde0fad2e06f, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_Resource: {fileID: 8300000, guid: 2993e27c7ce21d5479db76e5ee5fe3ee, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

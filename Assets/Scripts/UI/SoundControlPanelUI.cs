@@ -28,6 +28,7 @@ public class SoundControlPanelUI : MonoBehaviour
     {
         _musicSlider.value= AudioManager.Instance.GetMusicVolume();
         _soundFxSlider.value= AudioManager.Instance.GetSoundFxVolume();
+        
         Hide();
     }
     private void MusicSliderChange(float value)

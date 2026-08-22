@@ -253,7 +253,7 @@ AudioSource:
   m_GameObject: {fileID: 3149363392696182416}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8340816937034090585, guid: 11508bcf46be44e4ab5bdde0fad2e06f, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 049b0059a2169054791768b3915e696e, type: 3}
   m_PlayOnAwake: 0
@@ -353,3 +353,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e35ce5088b158a842b369501baf44b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spikes
+  _ignoreDamageFromTop: 0
